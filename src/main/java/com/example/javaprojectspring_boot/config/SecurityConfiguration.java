@@ -32,7 +32,6 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         String[] api={
-                "/audio/**",
                 "/contact/**",
                 "/chat/**"
 
@@ -44,12 +43,15 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorise ->
                         authorise.requestMatchers("/auth/**",
+                                        "/audio/**",
                                         "/swagger-ui/**",
+                                        "/contact/**",
+                                        "/chat/**",
                                         "/swagger-resources/*",
                                         "*.html",
                                         "/api/v1/swagger.json"
                                 ).permitAll()
-                                .requestMatchers(api).permitAll()
+                                //.requestMatchers(api).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)

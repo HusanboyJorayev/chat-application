@@ -89,12 +89,12 @@ public class AudioService {
                     .build();
             this.audioMapper.update(audio, audioResponse);
             Files.delete(Path.of(optional.get().getPath()));
+            var newAudio=this.audioRepository.save(audio);
             return ResponseDto.<AudioResponse>builder()
                     .success(true)
                     .message("Ok")
                     .data(this.audioMapper.toDto(
-                            this.audioRepository.save(
-                                    audio)))
+                            newAudio))
                     .build();
 
         } catch (Exception e) {
