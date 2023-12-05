@@ -123,8 +123,9 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
         try {
             return this.chatRepository.findByIdAndDeletedAtIsNull(id)
                     .map(chat -> {
-                        this.chatRepository.save(chat);
+                        chat.setUpdatedAt(LocalDateTime.now());
                         this.chatMapper.update(chat, dto);
+                        this.chatRepository.save(chat);
 
                         return ResponseDto.<ChatDto>builder()
                                 .success(true)
