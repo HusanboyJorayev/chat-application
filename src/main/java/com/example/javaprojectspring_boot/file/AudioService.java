@@ -19,7 +19,6 @@ import java.util.UUID;
 public class AudioService {
     private final AudioMapper audioMapper;
     private final AudioRepository audioRepository;
-    private final AudioValidation audioValidation;
 
     public ResponseDto<AudioResponse> upload(MultipartFile file) {
         try {

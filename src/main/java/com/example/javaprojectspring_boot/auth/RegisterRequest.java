@@ -1,5 +1,6 @@
 package com.example.javaprojectspring_boot.auth;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -19,5 +20,6 @@ public class RegisterRequest {
     //@NotBlank(message = "email cannot be null or empty")
     //private String email;
     @NotBlank(message = "phoneNumber cannot be null or empty")
+    @Column(unique = true)
     private String phoneNumber;
 }

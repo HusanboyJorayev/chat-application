@@ -77,8 +77,9 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
         try {
             return this.contactRepository.findByIdAndDeletedAtIsNull(id)
                     .map(contact -> {
-                        this.contactRepository.save(contact);
+                        contact.setUpdatedAt(LocalDateTime.now());
                         this.contactMapper.update(contact, dto);
+                        this.contactRepository.save(contact);
 
                         return ResponseDto.<ContactDto>builder()
                                 .success(true)
@@ -105,8 +106,7 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
             return this.contactRepository.findByIdAndDeletedAtIsNull(id)
                     .map(contact -> {
                         contact.setDeletedAt(LocalDateTime.now());
-                        this.contactRepository.save(contact);
-
+                        //this.contactRepository.save(contact);
                         return ResponseDto.<ContactDto>builder()
                                 .success(true)
                                 .message("Ok")

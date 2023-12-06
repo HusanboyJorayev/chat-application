@@ -75,8 +75,8 @@ public class AuthenticationService {
         var user = userRepository.findByPhoneNumber(request.getPhoneNumber())
                 .orElseThrow();
         var jwt = jwtService.generateToken(user);
-        /*revokeAllUsertokens(user);
-        saveUserToken(user, jwt);*/
+        //revokeAllUsertokens(user);
+        saveUserToken(user, jwt);
         return AuthenticationResponse.builder()
                 .token(jwt)
                 .build();
@@ -87,14 +87,14 @@ public class AuthenticationService {
                 .user(savedUser)
                 .token(jwt)
                 .tokenType(TokenType.BEARER)
-                .expired(false)
-                .revoked(false)
+                .expired(true)
+                .revoked(true)
                 .build();
 
         this.tokenRepository.save(token);
     }
 
-    private void revokeAllUsertokens(User user) {
+   /* private void revokeAllUsertokens(User user) {
         var validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId());
         if (validUserTokens.isEmpty()) {
             return;
@@ -105,7 +105,7 @@ public class AuthenticationService {
         });
 
         tokenRepository.saveAll(validUserTokens);
-    }
+    }*/
 
     public ResponseEntity<User> get(Integer id) {
         Optional<User> optional = this.userRepository.findByIdAndDeletedAtIsNull(id);
