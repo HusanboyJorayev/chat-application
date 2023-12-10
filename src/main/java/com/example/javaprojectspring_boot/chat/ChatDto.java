@@ -18,6 +18,8 @@ public class ChatDto {
     @NotNull(message = "getterId cannot be null")
     private Integer getterId;
     private String message;
+    private boolean request;
+
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

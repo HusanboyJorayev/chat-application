@@ -21,6 +21,7 @@ public class Chat {
     private Integer senderId;
     private Integer getterId;
     private String message;
+    private boolean request;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
