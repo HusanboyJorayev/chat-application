@@ -152,7 +152,7 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
             return this.chatRepository.findByIdAndDeletedAtIsNull(id)
                     .map(chat -> {
                         chat.setDeletedAt(LocalDateTime.now());
-                        this.chatRepository.save(chat);
+                        this.chatRepository.delete(chat);
 
                         return ResponseDto.<ChatDto>builder()
                                 .success(true)
