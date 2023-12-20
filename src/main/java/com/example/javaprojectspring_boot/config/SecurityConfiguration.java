@@ -44,6 +44,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorise ->
                         authorise.requestMatchers("/auth/**",
                                         "/audio/**",
+                                        "/groups/**",
                                         "/swagger-ui/**",
                                         "/contact/**",
                                         "/chat/**",

@@ -1,6 +1,7 @@
 package com.example.javaprojectspring_boot.token;
 
 import com.example.javaprojectspring_boot.user.User;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "token")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

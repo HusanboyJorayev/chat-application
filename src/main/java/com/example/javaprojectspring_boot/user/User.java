@@ -2,6 +2,7 @@ package com.example.javaprojectspring_boot.user;
 
 import com.example.javaprojectspring_boot.chat.Chat;
 import com.example.javaprojectspring_boot.contact.Contact;
+import com.example.javaprojectspring_boot.group.Group;
 import com.example.javaprojectspring_boot.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -50,6 +51,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "getterId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Chat> chatGetterId;
+
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Group> groups;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

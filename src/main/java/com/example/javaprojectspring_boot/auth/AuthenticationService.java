@@ -6,6 +6,7 @@ import com.example.javaprojectspring_boot.config.JwtService;
 import com.example.javaprojectspring_boot.contact.ContactMapper;
 import com.example.javaprojectspring_boot.dto.ErrorDto;
 import com.example.javaprojectspring_boot.dto.ResponseDto;
+import com.example.javaprojectspring_boot.group.GroupMapper;
 import com.example.javaprojectspring_boot.token.Token;
 import com.example.javaprojectspring_boot.token.TokenRepository;
 import com.example.javaprojectspring_boot.token.TokenType;
@@ -35,6 +36,7 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ContactMapper contactMapper;
+    private final GroupMapper groupMapper;
     private final ChatMapper chatMapper;
     private final JwtService jwtService;
 
@@ -87,8 +89,8 @@ public class AuthenticationService {
                 .user(savedUser)
                 .token(jwt)
                 .tokenType(TokenType.BEARER)
-                .expired(true)
-                .revoked(true)
+                //.expired(true)
+                //.revoked(true)
                 .build();
 
         this.tokenRepository.save(token);
@@ -110,10 +112,11 @@ public class AuthenticationService {
     public ResponseEntity<User> get(Integer id) {
         Optional<User> optional = this.userRepository.findByIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
-            //return ResponseEntity.badRequest().body(null);
-            throw new RuntimeException("User is not found");
+            return ResponseEntity.badRequest().body(null);
+            //throw new RuntimeException("User is not found");
         }
         User user = optional.get();
+        user.getGroups().stream().map(this.groupMapper::toDto);
         user.getContacts().stream().map(this.contactMapper::toDto);
         user.getChatSenderId().stream().map(this.chatMapper::toDto);
         user.getChatGetterId().stream().map(this.chatMapper::toDto);

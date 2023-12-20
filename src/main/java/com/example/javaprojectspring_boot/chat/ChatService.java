@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +41,7 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
         } catch (Exception e) {
             return ResponseDto.<ChatDto>builder()
                     .code(-1)
-                    .message("Type while saving error")
+                    .message("chat while saving error")
                     .build();
         }
     }
@@ -56,13 +57,13 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
                             .build())
                     .orElse(ResponseDto.<ChatDto>builder()
                             .code(-1)
-                            .message("type is not found")
+                            .message("chat is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<ChatDto>builder()
                     .code(-1)
-                    .message("Type while getting error")
+                    .message("chat while getting error")
                     .build();
         }
     }
@@ -78,13 +79,13 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
                             .build())
                     .orElse(ResponseDto.<ChatDto>builder()
                             .code(-1)
-                            .message("type is not found")
+                            .message("chat is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<ChatDto>builder()
                     .code(-1)
-                    .message("Type while getting error")
+                    .message("chat while getting error")
                     .build();
         }
     }
@@ -106,7 +107,7 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
         } catch (Exception e) {
             return ResponseDto.<ChatDto>builder()
                     .code(-1)
-                    .message("Type while getting error")
+                    .message("chat while getting error")
                     .build();
         }
     }
@@ -141,7 +142,7 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
         } catch (Exception e) {
             return ResponseDto.<ChatDto>builder()
                     .code(-1)
-                    .message("type while updating error")
+                    .message("chat while updating error")
                     .build();
         }
     }
@@ -168,7 +169,7 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
         } catch (Exception e) {
             return ResponseDto.<ChatDto>builder()
                     .code(-1)
-                    .message("Type while deleting error")
+                    .message("chat while deleting error")
                     .build();
         }
     }
@@ -191,8 +192,46 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
         } catch (Exception e) {
             return ResponseDto.<List<ChatDto>>builder()
                     .code(-1)
-                    .message("Types while getting all")
+                    .message("chat while getting all")
                     .build();
         }
+    }
+
+    public ResponseDto<List<ChatDto>>getAllGetterIdAndSenderId(Integer getId, Integer sendId) {
+       /* Optional<Chat>optional=this.chatRepository.findAllByGetterIdAndSenderIdAndDeletedAtIsNull(getId, sendId);
+        if (optional.isEmpty()){
+            return ResponseDto.<ChatDto>builder()
+                    .code(-1)
+                    .message("Chat is not found")
+                    .build();
+        }
+        Chat chat=optional.get();
+        return ResponseDto.<ChatDto>builder()
+                .success(true)
+                .message("Ok")
+                .data(this.chatMapper.toDto(chat))
+                .build();*/
+
+
+        try {
+            List<Chat> allChats = this.chatRepository.AllByGetterIdAndSenderIdAndDeletedAtIsNull(getId, sendId);
+            if (allChats.isEmpty()) {
+                return ResponseDto.<List<ChatDto>>builder()
+                        .code(-1)
+                        .message("chats are not found")
+                        .build();
+            }
+            return ResponseDto.<List<ChatDto>>builder()
+                    .success(true)
+                    .message("Ok")
+                    .data(allChats.stream().map(this.chatMapper::toDto).toList())
+                    .build();
+        } catch (Exception e) {
+            return ResponseDto.<List<ChatDto>>builder()
+                    .code(-1)
+                    .message("chat while getting all")
+                    .build();
+        }
+
     }
 }

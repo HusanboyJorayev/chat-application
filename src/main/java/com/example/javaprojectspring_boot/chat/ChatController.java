@@ -53,4 +53,9 @@ public class ChatController implements SimpleCrud<Integer, ChatDto> {
     public ResponseDto<List<ChatDto>> getAll() {
         return this.chatService.getAll();
     }
+
+    @GetMapping("/SendIdGetId")
+    public ResponseDto<List<ChatDto>>getAllGetterIdAndSenderId(@RequestParam Integer g, @RequestParam Integer s) {
+        return this.chatService.getAllGetterIdAndSenderId(g, s);
+    }
 }
