@@ -27,12 +27,12 @@ public class ChatController implements SimpleCrud<Integer, ChatDto> {
     }
 
     @GetMapping("/getSenderId")
-    public ResponseDto<ChatDto> getSenderId(@RequestParam Integer id) {
+    public ResponseDto<List<ChatDto>> getSenderId(@RequestParam Integer id) {
         return this.chatService.getSenderId(id);
     }
 
     @GetMapping("/getReceivedId")
-    public ResponseDto<ChatDto> getReceivedId(@RequestParam Integer id) {
+    public ResponseDto<List<ChatDto>> getReceivedId(@RequestParam Integer id) {
         return this.chatService.getReceivedId(id);
     }
 
@@ -55,7 +55,7 @@ public class ChatController implements SimpleCrud<Integer, ChatDto> {
     }
 
     @GetMapping("/SendIdGetId")
-    public ResponseDto<List<ChatDto>>getAllGetterIdAndSenderId(@RequestParam Integer g, @RequestParam Integer s) {
+    public ResponseDto<List<ChatDto>> getAllGetterIdAndSenderId(@RequestParam Integer g, @RequestParam Integer s) {
         return this.chatService.getAllGetterIdAndSenderId(g, s);
     }
 }

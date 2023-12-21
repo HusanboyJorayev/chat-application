@@ -15,10 +15,16 @@ public interface ChatRepository extends JpaRepository<Chat, Integer> {
     select c from Chat as c where c.senderId=:senderId and c.getterId=:getterId and c.getterId!=c.senderId and c.deletedAt is null 
 """)
     List<Chat>AllByGetterIdAndSenderIdAndDeletedAtIsNull(Integer getterId, Integer senderId);
-    //List<Chat>AllByGetterIdAndSenderIdAndDeletedAtIsNull(Integer getterId, Integer senderId);
-    Optional<Chat> findBySenderIdAndAndDeletedAtIsNull(Integer senderId);
 
-    Optional<Chat> findByGetterIdAndAndDeletedAtIsNull(Integer getterId);
+    @Query("""
+select s from Chat as s where s.senderId=:senderId 
+""")
+    List<Chat> getAllSenderIdAndDeletedAtIsNull(Integer senderId);
+
+    @Query("""
+select s from Chat as s where s.getterId=:getterId 
+""")
+    List<Chat> getAllGetterIdAndDeletedAtIsNull(Integer getterId);
 
 
     Optional<Chat>findByIdAndDeletedAtIsNull(Integer id);
