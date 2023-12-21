@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +24,7 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
             return ResponseDto.<ChatDto>builder()
                     .code(-3)
                     .message("Validation error")
+                    .error(errors)
                     .build();
         }
         if (Objects.equals(dto.getGetterId(), dto.getSenderId())) {
@@ -128,6 +128,7 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
             return ResponseDto.<ChatDto>builder()
                     .code(-3)
                     .message("Validation error")
+                    .error(errors)
                     .build();
         }
         try {

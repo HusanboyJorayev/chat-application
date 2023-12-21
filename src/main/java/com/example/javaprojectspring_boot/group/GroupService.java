@@ -25,6 +25,7 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
             return ResponseDto.<GroupDto>builder()
                     .code(-3)
                     .message("Validation error")
+                    .error(errors)
                     .build();
         }
         try {
@@ -74,6 +75,7 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
             return ResponseDto.<GroupDto>builder()
                     .code(-3)
                     .message("Validation error")
+                    .error(errors)
                     .build();
         }
         try {

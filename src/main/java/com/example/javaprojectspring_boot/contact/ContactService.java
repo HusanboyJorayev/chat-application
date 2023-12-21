@@ -23,6 +23,7 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
             return ResponseDto.<ContactDto>builder()
                     .code(-3)
                     .message("Validation error")
+                    .error(errors)
                     .build();
         }
         try {
@@ -72,6 +73,7 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
             return ResponseDto.<ContactDto>builder()
                     .code(-3)
                     .message("Validation error")
+                    .error(errors)
                     .build();
         }
         try {

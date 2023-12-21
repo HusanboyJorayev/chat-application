@@ -18,7 +18,7 @@ public class GroupDto {
     private Integer id;
     @NotBlank(message = "groupName cannot be null or empty")
     private String name;
-    @NotNull
+    @NotNull(message = "userId cannot be null")
     private Integer userId;
 
     private LocalDateTime createdAt;
