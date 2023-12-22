@@ -29,7 +29,8 @@ public class User implements UserDetails {
     private Integer id;
     private String firstName;
     private String lastName;
-    //private String email;
+    private String username;//username
+    private String status;//status
     private String phoneNumber;
     private String password;
     private String key1;
