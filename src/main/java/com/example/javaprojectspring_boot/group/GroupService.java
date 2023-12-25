@@ -57,13 +57,13 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
                             .build())
                     .orElse(ResponseDto.<GroupDto>builder()
                             .code(-1)
-                            .message("type is not found")
+                            .message("group is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<GroupDto>builder()
                     .code(-1)
-                    .message("Type while getting error")
+                    .message("group while getting error")
                     .build();
         }
     }
@@ -93,13 +93,13 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
                     })
                     .orElse(ResponseDto.<GroupDto>builder()
                             .code(-1)
-                            .message("Type is not found")
+                            .message("group is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<GroupDto>builder()
                     .code(-1)
-                    .message("type while updating error")
+                    .message("group while updating error")
                     .build();
         }
     }
@@ -120,13 +120,13 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
                     })
                     .orElse(ResponseDto.<GroupDto>builder()
                             .code(-1)
-                            .message("Type is not found")
+                            .message("group is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<GroupDto>builder()
                     .code(-1)
-                    .message("Type while deleting error")
+                    .message("group while deleting error")
                     .build();
         }
     }
@@ -138,7 +138,7 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
             if (allChats.isEmpty()) {
                 return ResponseDto.<List<GroupDto>>builder()
                         .code(-1)
-                        .message("Types are not found")
+                        .message("groups are not found")
                         .build();
             }
             return ResponseDto.<List<GroupDto>>builder()
@@ -149,7 +149,7 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
         } catch (Exception e) {
             return ResponseDto.<List<GroupDto>>builder()
                     .code(-1)
-                    .message("Types while getting all")
+                    .message("groups while getting all")
                     .build();
         }
     }
