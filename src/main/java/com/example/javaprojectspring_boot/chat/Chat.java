@@ -13,15 +13,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "chat")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer senderId;
-    private Integer getterId;
     private String message;
     private boolean request;
+    private String getPhone;
+    private String sendPhone;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

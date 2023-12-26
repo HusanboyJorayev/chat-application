@@ -45,11 +45,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;
 
-    @OneToMany(mappedBy = "senderId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Chat> chatSenderId;
+   /* @OneToMany(mappedBy = "senderId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Chat> chatSenderId;*/
 
-    @OneToMany(mappedBy = "getterId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Chat> chatGetterId;
+   /* @OneToMany(mappedBy = "getterId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Chat> chatGetterId;*/
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Group> groups;

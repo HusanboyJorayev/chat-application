@@ -12,20 +12,9 @@ import java.util.Optional;
 public interface ChatRepository extends JpaRepository<Chat, Integer> {
 
     @Query("""
-    select c from Chat as c where c.senderId=:senderId and c.getterId=:getterId and c.getterId!=c.senderId and c.deletedAt is null 
+select c from Chat as c where c.getPhone=:g and c.sendPhone=:s and c.getPhone!=c.sendPhone and c.deletedAt is null 
 """)
-    List<Chat>AllByGetterIdAndSenderIdAndDeletedAtIsNull(Integer getterId, Integer senderId);
-
-    @Query("""
-select s from Chat as s where s.senderId=:senderId 
-""")
-    List<Chat> getAllSenderIdAndDeletedAtIsNull(Integer senderId);
-
-    @Query("""
-select s from Chat as s where s.getterId=:getterId 
-""")
-    List<Chat> getAllGetterIdAndDeletedAtIsNull(Integer getterId);
-
+    List<Chat>getAllGetPhoneAndSendPhone(@Param(value = "g") String getPhone,@Param(value = "s") String sendPhone);
 
     Optional<Chat>findByIdAndDeletedAtIsNull(Integer id);
 

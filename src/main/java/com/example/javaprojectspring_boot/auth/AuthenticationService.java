@@ -103,8 +103,8 @@ public class AuthenticationService {
         User user = optional.get();
         user.getGroups().stream().map(this.groupMapper::toDto);
         user.getContacts().stream().map(this.contactMapper::toDto);
-        user.getChatSenderId().stream().map(this.chatMapper::toDto);
-        user.getChatGetterId().stream().map(this.chatMapper::toDto);
+        /*user.getChatSenderId().stream().map(this.chatMapper::toDto);
+        user.getChatGetterId().stream().map(this.chatMapper::toDto);*/
         return ResponseEntity.ok().body(user);
     }
 
@@ -115,7 +115,7 @@ public class AuthenticationService {
         }
         var user = optional.get();
 
-        if (!Objects.equals(user.getPassword(), dto.getPassword()) || !Objects.equals(user.getPhoneNumber(), dto.getPhoneNumber())) {
+        if (!this.userRepository.findByPhone(dto.getPhoneNumber())) {
             return ResponseEntity.badRequest().body(null);
         }
 
