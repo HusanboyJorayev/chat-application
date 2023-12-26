@@ -21,9 +21,6 @@ public class UserMapper {
         if (dto.getPassword()!=null){
             user.setPassword(dto.getPassword());
         }
-       /* if (dto.getPhoneNumber()!=null){
-            user.setPhoneNumber(dto.getPhoneNumber());
-        }*/
         if (dto.getKey1()!=null){
             user.setKey1(dto.getKey1());
         }
