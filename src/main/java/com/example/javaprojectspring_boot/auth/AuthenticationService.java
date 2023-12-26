@@ -10,10 +10,7 @@ import com.example.javaprojectspring_boot.group.GroupMapper;
 import com.example.javaprojectspring_boot.token.Token;
 import com.example.javaprojectspring_boot.token.TokenRepository;
 import com.example.javaprojectspring_boot.token.TokenType;
-import com.example.javaprojectspring_boot.user.Role;
-import com.example.javaprojectspring_boot.user.User;
-import com.example.javaprojectspring_boot.user.UserRepository;
-import com.example.javaprojectspring_boot.user.UserValidation;
+import com.example.javaprojectspring_boot.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,12 +29,14 @@ import java.util.Optional;
 public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
     private final TokenRepository tokenRepository;
+    private final AuthValidation authValidation;
     private final UserValidation userValidation;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final ContactMapper contactMapper;
     private final GroupMapper groupMapper;
+    private final UserMapper userMapper;
     private final ChatMapper chatMapper;
     private final JwtService jwtService;
 
@@ -44,23 +44,20 @@ public class AuthenticationService {
 
         List<ErrorDto> errors = this.userValidation.validate(request);
         if (!errors.isEmpty()) {
-            throw new RuntimeException(String.valueOf(List.of(errors)));
+            return null;
         }
 
         var user = User.builder()
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
-                //.email(request.getEmail())
                 .phoneNumber(request.getPhoneNumber())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.ROLE_USER)
                 .createdAt(LocalDateTime.now())
                 .build();
         this.userRepository.save(user);
-        //var savedUser = this.userRepository.save(user);
         var jwt = jwtService.generateToken(user);
 
-        //saveUserToken(user, jwt);
 
         return AuthenticationResponse.builder()
                 .token("Successful")
@@ -68,6 +65,11 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticateRequest request) {
+        List<ErrorDto> errors = this.authValidation.validate(request);
+        if (!errors.isEmpty()) {
+            return null;
+        }
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getPhoneNumber(),
@@ -77,7 +79,6 @@ public class AuthenticationService {
         var user = userRepository.findByPhoneNumber(request.getPhoneNumber())
                 .orElseThrow();
         var jwt = jwtService.generateToken(user);
-        //revokeAllUsertokens(user);
         saveUserToken(user, jwt);
         return AuthenticationResponse.builder()
                 .token(jwt)
@@ -89,31 +90,15 @@ public class AuthenticationService {
                 .user(savedUser)
                 .token(jwt)
                 .tokenType(TokenType.BEARER)
-                //.expired(true)
-                //.revoked(true)
                 .build();
 
         this.tokenRepository.save(token);
     }
 
-   /* private void revokeAllUsertokens(User user) {
-        var validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId());
-        if (validUserTokens.isEmpty()) {
-            return;
-        }
-        validUserTokens.forEach(t -> {
-            t.setExpired(true);
-            t.setRevoked(true);
-        });
-
-        tokenRepository.saveAll(validUserTokens);
-    }*/
-
     public ResponseEntity<User> get(Integer id) {
         Optional<User> optional = this.userRepository.findByIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
             return ResponseEntity.badRequest().body(null);
-            //throw new RuntimeException("User is not found");
         }
         User user = optional.get();
         user.getGroups().stream().map(this.groupMapper::toDto);
@@ -121,6 +106,25 @@ public class AuthenticationService {
         user.getChatSenderId().stream().map(this.chatMapper::toDto);
         user.getChatGetterId().stream().map(this.chatMapper::toDto);
         return ResponseEntity.ok().body(user);
+    }
+
+    public ResponseEntity<User> update(Integer id, UserDto dto) {
+        Optional<User> optional = this.userRepository.findByIdAndDeletedAtIsNull(id);
+        if (optional.isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        var user = optional.get();
+
+        if (!Objects.equals(user.getPassword(), dto.getPassword()) || !Objects.equals(user.getPhoneNumber(), dto.getPhoneNumber())) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        user.setUpdatedAt(LocalDateTime.now());
+        this.userMapper.update(user, dto);
+
+        this.userRepository.save(user);
+
+        return ResponseEntity.ok().body(this.userRepository.save(user));
     }
 
     public ResponseEntity<List<User>> getAllUsers() {

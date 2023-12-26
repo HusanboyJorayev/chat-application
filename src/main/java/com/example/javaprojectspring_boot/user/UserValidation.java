@@ -21,9 +21,6 @@ public class UserValidation {
         if (StringUtils.isBlank(request.getFirstname())) {
             errors.add(new ErrorDto("firstname", "firstname cannot be null or empty"));
         }
-       /* if (StringUtils.isBlank(request.getEmail())) {
-            errors.add(new ErrorDto("email", "email cannot be null or empty"));
-        }*/
         if (StringUtils.isBlank(request.getLastname())) {
             errors.add(new ErrorDto("lastname", "lastname cannot be null or empty"));
         }
