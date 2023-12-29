@@ -180,12 +180,12 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
         } catch (Exception e) {
             return ResponseDto.<List<GroupDto>>builder()
                     .code(-1)
-                    .message("groups while getting all")
+                    .message("groups while getting  all")
                     .build();
         }
     }
 
-/*    public ResponseEntity<String> addUser(Integer userId, Integer groupId) {
+/* public ResponseEntity<String> addUser(Integer userId, Integer groupId) {
         var group = this.groupRepository.findByIdAndDeletedAtIsNull(groupId);
         var optional = this.userRepository.addUser(userId);
         if (optional.isEmpty() || !optional.get().isAddGroup()) {
@@ -209,3 +209,4 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
         }
     }
 }
+

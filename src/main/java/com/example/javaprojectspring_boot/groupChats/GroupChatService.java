@@ -41,7 +41,7 @@ public class GroupChatService implements SimpleCrud<Integer, GroupChatDto> {
         } catch (Exception e) {
             return ResponseDto.<GroupChatDto>builder()
                     .code(-1)
-                    .message("Type while saving error")
+                    .message("groupChat while saving error")
                     .build();
         }
     }
@@ -57,13 +57,13 @@ public class GroupChatService implements SimpleCrud<Integer, GroupChatDto> {
                             .build())
                     .orElse(ResponseDto.<GroupChatDto>builder()
                             .code(-1)
-                            .message("type is not found")
+                            .message("groupChat is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<GroupChatDto>builder()
                     .code(-1)
-                    .message("Type while getting error")
+                    .message("groupChat while getting error")
                     .build();
         }
     }
@@ -77,13 +77,13 @@ public class GroupChatService implements SimpleCrud<Integer, GroupChatDto> {
                             .build())
                     .orElse(ResponseDto.<GroupChatDto>builder()
                             .code(-1)
-                            .message("type is not found")
+                            .message("groupChat is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<GroupChatDto>builder()
                     .code(-1)
-                    .message("Type while getting error")
+                    .message("groupChat while getting error")
                     .build();
         }
     }
@@ -113,13 +113,13 @@ public class GroupChatService implements SimpleCrud<Integer, GroupChatDto> {
                     })
                     .orElse(ResponseDto.<GroupChatDto>builder()
                             .code(-1)
-                            .message("Type is not found")
+                            .message("groupChat is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<GroupChatDto>builder()
                     .code(-1)
-                    .message("type while updating error")
+                    .message("groupChat while updating error")
                     .build();
         }
     }
@@ -139,13 +139,13 @@ public class GroupChatService implements SimpleCrud<Integer, GroupChatDto> {
                     })
                     .orElse(ResponseDto.<GroupChatDto>builder()
                             .code(-1)
-                            .message("Type is not found")
+                            .message("groupChat is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<GroupChatDto>builder()
                     .code(-1)
-                    .message("Type while deleting error")
+                    .message("groupChat while deleting error")
                     .build();
         }
     }
@@ -157,7 +157,7 @@ public class GroupChatService implements SimpleCrud<Integer, GroupChatDto> {
             if (categories.isEmpty()) {
                 return ResponseDto.<List<GroupChatDto>>builder()
                         .code(-1)
-                        .message("Types are not found")
+                        .message("groupChat are not found")
                         .build();
             }
             return ResponseDto.<List<GroupChatDto>>builder()
@@ -168,7 +168,7 @@ public class GroupChatService implements SimpleCrud<Integer, GroupChatDto> {
         } catch (Exception e) {
             return ResponseDto.<List<GroupChatDto>>builder()
                     .code(-1)
-                    .message("Types while getting all")
+                    .message("groupChat while getting all")
                     .build();
         }
     }

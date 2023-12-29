@@ -26,6 +26,11 @@ public class GroupChatController implements SimpleCrud<Integer, GroupChatDto> {
         return this.groupChatService.get(id);
     }
 
+    @GetMapping("/getWithUsers")
+    public ResponseDto<GroupChatDto> getWithUsers(Integer id) {
+        return this.groupChatService.getWithUsers(id);
+    }
+
     @Override
     @PutMapping("/update")
     public ResponseDto<GroupChatDto> update(@Valid @RequestBody GroupChatDto dto, @RequestParam Integer id) {

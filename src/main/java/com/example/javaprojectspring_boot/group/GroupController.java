@@ -28,7 +28,7 @@ public class GroupController implements SimpleCrud<Integer, GroupDto> {
         return this.groupService.get(id);
     }
 
-    @GetMapping("/getgroupChats")
+    @GetMapping("/getGroupChats")
     public ResponseDto<GroupDto> getGroupChats(@RequestParam Integer id) {
         return this.groupService.getGroupChats(id);
     }
