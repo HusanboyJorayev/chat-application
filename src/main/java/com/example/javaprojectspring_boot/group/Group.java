@@ -29,6 +29,8 @@ public class Group {
     @Enumerated(EnumType.STRING)
     private GroupRole groupRole;
 
+    private Integer addGroupId;
+
 
     @OneToMany(mappedBy = "groupId",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<GroupChat>groupChats;

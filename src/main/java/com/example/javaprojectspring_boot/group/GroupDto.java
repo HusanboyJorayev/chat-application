@@ -33,6 +33,8 @@ public class GroupDto {
     @Enumerated(EnumType.STRING)
     private GroupRole groupRole;
 
+    private Integer addGroupId;
+
     private List<GroupChatDto>groupChats;
 
     private LocalDateTime createdAt;

@@ -51,9 +51,9 @@ public class GroupController implements SimpleCrud<Integer, GroupDto> {
         return this.groupService.getAll();
     }
 
-    @GetMapping("/addUser")
+/*    @GetMapping("/addUser")
     public ResponseEntity<String> addUser(@RequestParam Integer userId, @RequestParam Integer groupId) {
         return this.groupService.addUser(userId, groupId);
-    }
+    }*/
 }
 

@@ -185,7 +185,7 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
         }
     }
 
-    public ResponseEntity<String> addUser(Integer userId, Integer groupId) {
+/*    public ResponseEntity<String> addUser(Integer userId, Integer groupId) {
         var group = this.groupRepository.findByIdAndDeletedAtIsNull(groupId);
         var optional = this.userRepository.addUser(userId);
         if (optional.isEmpty() || !optional.get().isAddGroup()) {
@@ -196,9 +196,10 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
         }
         var g = group.get();
         g.setGroupRole(GroupRole.USER);
+        g.setAddGroupId(userId);
         this.groupRepository.save(g);
         return ResponseEntity.ok().body("User add successfully");
-    }
+    }*/
 
     public void checkUser(Integer id) {
         Optional<Group> optional = this.groupRepository.findByIdAndDeletedAtIsNull(id);
