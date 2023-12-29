@@ -23,8 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class User implements UserDetails {
+public class User /*implements UserDetails*/ {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -34,6 +33,10 @@ public class User implements UserDetails {
     private String password;
     private String key1;
     private String key2;
+
+    private boolean addGroup;
+    private Integer groupChatId;
+
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -45,51 +48,14 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;
 
-   /* @OneToMany(mappedBy = "senderId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Chat> chatSenderId;*/
-
-   /* @OneToMany(mappedBy = "getterId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Chat> chatGetterId;*/
-
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Group> groups;
+
+    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Chat> messages;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return phoneNumber;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
+

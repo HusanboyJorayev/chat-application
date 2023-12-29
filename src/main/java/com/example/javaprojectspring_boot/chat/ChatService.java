@@ -157,7 +157,6 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
     }
 
     public ResponseDto<List<ChatDto>> getAllGetPhoneAndSendPhone(String getPhone, String sendPhone) {
-
         try {
             List<Chat> allChats = this.chatRepository.getAllGetPhoneAndSendPhone(getPhone, sendPhone);
             if (allChats.isEmpty()) {

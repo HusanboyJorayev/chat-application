@@ -1,10 +1,15 @@
 package com.example.javaprojectspring_boot.group;
 
+import com.example.javaprojectspring_boot.chat.Chat;
+import com.example.javaprojectspring_boot.groupChats.GroupChat;
+import com.example.javaprojectspring_boot.user.GroupRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,6 +25,15 @@ public class Group {
     private Integer id;
     private String name;
     private Integer userId;
+
+    @Enumerated(EnumType.STRING)
+    private GroupRole groupRole;
+
+
+    @OneToMany(mappedBy = "groupId",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private List<GroupChat>groupChats;
+
+
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

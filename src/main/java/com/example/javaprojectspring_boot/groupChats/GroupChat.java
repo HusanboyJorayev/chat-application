@@ -1,10 +1,11 @@
-package com.example.javaprojectspring_boot.chat;
+package com.example.javaprojectspring_boot.groupChats;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.example.javaprojectspring_boot.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,18 +13,16 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "chat")
-public class Chat {
+@Table(name = "groupChat")
+public class GroupChat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String message;
-    private boolean request;
-    private String getPhone;
-    private String sendPhone;
-
-    private Integer userId;
     private Integer groupId;
+
+    @OneToMany(mappedBy = "groupChatId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<User> usersList;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

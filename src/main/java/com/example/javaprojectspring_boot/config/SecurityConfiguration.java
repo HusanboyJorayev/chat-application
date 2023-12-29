@@ -31,23 +31,20 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        String[] api={
-                "/contact/**",
-                "/chat/**"
-
-        };
-
         http
                 .cors().configurationSource(corsConfigurationSource()).and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorise ->
                         authorise.requestMatchers("/auth/**",
+                                        "/user/**",
+                                        "/groupChat/**",
                                         "/audio/**",
                                         "/groups/**",
                                         "/swagger-ui/**",
                                         "/contact/**",
                                         "/chat/**",
+                                        "/general/**",
                                         "/swagger-resources/*",
                                         "*.html",
                                         "/api/v1/swagger.json"

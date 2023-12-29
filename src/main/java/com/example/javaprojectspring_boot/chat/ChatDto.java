@@ -23,6 +23,9 @@ public class ChatDto {
     @NotBlank(message = "sendPhone cannot be null or empty")
     private String sendPhone;
 
+    private Integer userId;
+    private Integer groupId;
+
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

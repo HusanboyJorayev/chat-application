@@ -5,6 +5,7 @@ import com.example.javaprojectspring_boot.dto.ResponseDto;
 import com.example.javaprojectspring_boot.dto.SimpleCrud;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,11 @@ public class GroupController implements SimpleCrud<Integer, GroupDto> {
         return this.groupService.get(id);
     }
 
+    @GetMapping("/getgroupChats")
+    public ResponseDto<GroupDto> getGroupChats(@RequestParam Integer id) {
+        return this.groupService.getGroupChats(id);
+    }
+
     @Override
     @PutMapping("/update")
     public ResponseDto<GroupDto> update(@Valid @RequestBody GroupDto dto, @RequestParam Integer id) {
@@ -43,6 +49,11 @@ public class GroupController implements SimpleCrud<Integer, GroupDto> {
     @GetMapping("/getAll")
     public ResponseDto<List<GroupDto>> getAll() {
         return this.groupService.getAll();
+    }
+
+    @GetMapping("/addUser")
+    public ResponseEntity<String> addUser(@RequestParam Integer userId, @RequestParam Integer groupId) {
+        return this.groupService.addUser(userId, groupId);
     }
 }
 

@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +35,7 @@ public class AuthenticationService {
     private final AuthValidation authValidation;
     private final UserValidation userValidation;
     private final UserRepository userRepository;
-    private final ContactMapper contactMapper;
-    private final GroupMapper groupMapper;
     private final UserMapper userMapper;
-    private final ChatMapper chatMapper;
     private final JwtService jwtService;
 
     public AuthenticationResponse register(RegisterRequest request) {
@@ -55,8 +53,9 @@ public class AuthenticationService {
                 .role(Role.ROLE_USER)
                 .createdAt(LocalDateTime.now())
                 .build();
+        UserDto dto=this.userMapper.toDto(user);
         this.userRepository.save(user);
-        var jwt = jwtService.generateToken(user);
+        var jwt = jwtService.generateToken(dto);
 
 
         return AuthenticationResponse.builder()
@@ -64,25 +63,24 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticateRequest request) {
+    public UserDto authenticate(AuthenticateRequest request) {
         List<ErrorDto> errors = this.authValidation.validate(request);
         if (!errors.isEmpty()) {
             return null;
         }
 
-        authenticationManager.authenticate(
+       /* authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getPhoneNumber(),
                         request.getPassword()
                 )
-        );
+        );*/
         var user = userRepository.findByPhoneNumber(request.getPhoneNumber())
                 .orElseThrow();
-        var jwt = jwtService.generateToken(user);
+        UserDto dto=this.userMapper.toDto(user);
+        var jwt = jwtService.generateToken(dto);
         saveUserToken(user, jwt);
-        return AuthenticationResponse.builder()
-                .token(jwt)
-                .build();
+        return dto;
     }
 
     private void saveUserToken(User savedUser, String jwt) {
@@ -93,47 +91,6 @@ public class AuthenticationService {
                 .build();
 
         this.tokenRepository.save(token);
-    }
-
-    public ResponseEntity<User> get(Integer id) {
-        Optional<User> optional = this.userRepository.findByIdAndDeletedAtIsNull(id);
-        if (optional.isEmpty()) {
-            return ResponseEntity.badRequest().body(null);
-        }
-        User user = optional.get();
-        user.getGroups().stream().map(this.groupMapper::toDto);
-        user.getContacts().stream().map(this.contactMapper::toDto);
-        /*user.getChatSenderId().stream().map(this.chatMapper::toDto);
-        user.getChatGetterId().stream().map(this.chatMapper::toDto);*/
-        return ResponseEntity.ok().body(user);
-    }
-
-    public ResponseEntity<User> update(Integer id, UserDto dto) {
-        Optional<User> optional = this.userRepository.findByIdAndDeletedAtIsNull(id);
-        if (optional.isEmpty()) {
-            return ResponseEntity.badRequest().body(null);
-        }
-        var user = optional.get();
-
-        if (!this.userRepository.findByPhone(dto.getPhoneNumber())) {
-            return ResponseEntity.badRequest().body(null);
-        }
-
-        user.setUpdatedAt(LocalDateTime.now());
-        this.userMapper.update(user, dto);
-
-        this.userRepository.save(user);
-
-        return ResponseEntity.ok().body(this.userRepository.save(user));
-    }
-
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> list = this.userRepository.getAllUsers();
-        List<User> userList = new ArrayList<>();
-        for (User user : list) {
-            userList.add(user);
-        }
-        return ResponseEntity.ok().body(userList);
     }
 
 }
