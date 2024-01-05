@@ -18,6 +18,7 @@ public class AudioResponse {
     @NotBlank
     private String path;
     private byte[] data;
+    private String type;
 
 
     private LocalDateTime createdAt;
