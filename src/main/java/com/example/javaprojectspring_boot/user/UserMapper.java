@@ -40,7 +40,7 @@ public abstract class UserMapper {
 
 
     @Mapping(target = "contacts", expression = "java(user.getContacts().stream().map(this.contactMapper::toDto).toList())")
-    @Mapping(target = "groups", expression = "java(user.getGroups().stream().map(this.groupMapper::toDto).toList())")
+    @Mapping(target = "groups", expression = "java(user.getGroups().stream().map(this.groupMapper::toDtoWithGroupChats).toList())")
     public abstract UserDto toDtoWithContactAndGroup(User user);
 
 
@@ -53,28 +53,9 @@ public abstract class UserMapper {
 
     public void view(User user, UserDto dto) {
         dto.setContacts(user.getContacts().stream().map(this.contactMapper::toDto).toList());
-        dto.setGroups(user.getGroups().stream().map(this.groupMapper::toDto).toList());
+        dto.setGroups(user.getGroups().stream().map(this.groupMapper::toDtoWithGroupChats).toList());
     }
 
 }
 
-  /*      if (dto==null){
-            return;
-        }
-        if (dto.getFirstName()!=null){
-            user.setFirstName(dto.getFirstName());
-        }
-        if (dto.getLastName()!=null){
-            user.setLastName(dto.getLastName());
-        }
-        if (dto.getPassword()!=null){
-            user.setPassword(dto.getPassword());
-        }
-        if (dto.getKey1()!=null){
-            user.setKey1(dto.getKey1());
-        }
-        if (dto.getKey2()!=null){
-            user.setKey2(dto.getKey2());
-        }
-    }*/
 
