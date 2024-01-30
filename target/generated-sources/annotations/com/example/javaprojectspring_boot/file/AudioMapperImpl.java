@@ -1,12 +1,11 @@
 package com.example.javaprojectspring_boot.file;
 
-import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-01-30T19:19:10+0500",
+    date = "2024-01-30T22:37:38+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20.0.2 (Oracle Corporation)"
 )
 @Component

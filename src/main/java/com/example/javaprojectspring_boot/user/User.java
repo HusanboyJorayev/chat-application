@@ -23,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public class User /*implements UserDetails*/ {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -51,11 +51,11 @@ public class User /*implements UserDetails*/ {
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Group> groups;
 
-    private List<User> chatUsersList;
-    private List<General> general;//general listi chatUsersList va groups listlarini o'z ichiga olgan list bo'ladi, General klassi User va Group klasslarini o'z ichiga olgan bo'ladi
+    //private List<User> chatUsersList;
+    //private List<General> general;//general listi chatUsersList va groups listlarini o'z ichiga olgan list bo'ladi, General klassi User va Group klasslarini o'z ichiga olgan bo'ladi
 
     @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<List<Chat>> messages;
+    private List<Chat>messages;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

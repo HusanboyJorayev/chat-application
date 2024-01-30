@@ -1,5 +1,6 @@
 package com.example.javaprojectspring_boot.chat;
 
+import com.example.javaprojectspring_boot.file.AudioResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +19,6 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String message;
-    private AudioResponse media; //AudioResponse klassini nomini Media qilsa yaxshi bo'ladi hamma medialar shu formatda saqlanadigan bo'ladi backenda byteArray ko'rinishida
     private boolean request;
     private String getPhone;
     private String sendPhone;

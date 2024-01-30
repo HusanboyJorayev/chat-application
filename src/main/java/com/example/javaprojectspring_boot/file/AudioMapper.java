@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", imports = Collectors.class)
+@Mapper(componentModel = "spring"/*, imports = Collectors.class*/)
 public abstract class AudioMapper {
 
 

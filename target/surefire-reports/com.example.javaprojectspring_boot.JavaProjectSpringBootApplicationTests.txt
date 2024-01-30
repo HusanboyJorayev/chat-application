@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.example.javaprojectspring_boot.JavaProjectSpringBootApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.876 s - in com.example.javaprojectspring_boot.JavaProjectSpringBootApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.667 s - in com.example.javaprojectspring_boot.JavaProjectSpringBootApplicationTests

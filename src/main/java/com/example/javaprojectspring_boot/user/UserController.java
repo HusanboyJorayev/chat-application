@@ -28,9 +28,14 @@ public class UserController {
         return this.userService.getGroup(id);
     }
 
-    @GetMapping("/getContactAndGroup")
-    public ResponseEntity<UserDto> getContactAndGroup(@RequestParam Integer id) {
-        return this.userService.getContactAndGroup(id);
+    @GetMapping("/getChat")
+    public ResponseEntity<UserDto> getChat(@RequestParam Integer id) {
+        return this.userService.getChat(id);
+    }
+
+    @GetMapping("/getContactAndGroupAndChats")
+    public ResponseEntity<UserDto> getContactAndGroupAndChats(@RequestParam Integer id) {
+        return this.userService.getContactAndGroupAndChats(id);
     }
 
     @PutMapping("/update")

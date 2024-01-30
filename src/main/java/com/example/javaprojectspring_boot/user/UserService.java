@@ -52,13 +52,23 @@ public class UserService {
         return ResponseEntity.ok().body(dto);
     }
 
-    public ResponseEntity<UserDto> getContactAndGroup(Integer id) {
+    public ResponseEntity<UserDto> getChat(Integer id) {
         Optional<User> optional = this.userRepository.findByIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
             return ResponseEntity.badRequest().body(null);
         }
         User user = optional.get();
-        UserDto dto = this.userMapper.toDtoWithContactAndGroup(user);
+        UserDto dto = this.userMapper.toDtoWithChat(user);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    public ResponseEntity<UserDto> getContactAndGroupAndChats(Integer id) {
+        Optional<User> optional = this.userRepository.findByIdAndDeletedAtIsNull(id);
+        if (optional.isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        User user = optional.get();
+        UserDto dto = this.userMapper.toDtoWithContactAndGroupAndChat(user);
         return ResponseEntity.ok().body(dto);
     }
 
