@@ -34,6 +34,9 @@ public class Group {
 
     @OneToMany(mappedBy = "groupId",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<GroupChat>groupChats;
+    
+    @OneToMany(mappedBy = "groupChatId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<User> usersList;
 
 
 

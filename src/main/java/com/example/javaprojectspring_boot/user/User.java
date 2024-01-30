@@ -2,6 +2,7 @@ package com.example.javaprojectspring_boot.user;
 
 import com.example.javaprojectspring_boot.chat.Chat;
 import com.example.javaprojectspring_boot.contact.Contact;
+import com.example.javaprojectspring_boot.group.Group;
 import com.example.javaprojectspring_boot.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,19 +23,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class User implements UserDetails {
+public class User /*implements UserDetails*/ {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName;
     private String lastName;
-    private String username;//username
-    private String status;//status
     private String phoneNumber;
     private String password;
     private String key1;
     private String key2;
+
+    private boolean addGroup;
+    private Integer groupChatId;
+
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -46,48 +48,17 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;
 
-    @OneToMany(mappedBy = "senderId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Chat> chatSenderId;
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Group> groups;
 
-    @OneToMany(mappedBy = "getterId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Chat> chatGetterId;
+    private List<User> chatUsersList;
+    private List<General> general;//general listi chatUsersList va groups listlarini o'z ichiga olgan list bo'ladi, General klassi User va Group klasslarini o'z ichiga olgan bo'ladi
+
+    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<List<Chat>> messages;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return phoneNumber;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
+
