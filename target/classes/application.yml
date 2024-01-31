@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     database: postgresql
     show-sql: true
 #  data:
@@ -16,4 +16,4 @@ spring:
 #      port: 6379
 
 server:
-  port: 8181
+  port: 8082

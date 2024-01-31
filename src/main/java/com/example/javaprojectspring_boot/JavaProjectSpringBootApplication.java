@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @OpenAPIDefinition(
 		servers = @Server(
-				url = "http://213.230.64.93:8181"
+				url = "http://213.230.64.93:8082"
 		)
 )
 @Tag(name = "Chat-Application Api")
