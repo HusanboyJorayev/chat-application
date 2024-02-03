@@ -24,24 +24,24 @@ public class GroupController implements SimpleCrud<Integer, GroupDto> {
 
     @Override
     @GetMapping("/get")
-    public ResponseDto<GroupDto> get(@RequestParam Integer id) {
+    public ResponseDto<GroupDto> get(@RequestParam(value = "id") Integer id) {
         return this.groupService.get(id);
     }
 
     @GetMapping("/getGroupChats")
-    public ResponseDto<GroupDto> getGroupChats(@RequestParam Integer id) {
+    public ResponseDto<GroupDto> getGroupChats(@RequestParam(value = "id") Integer id) {
         return this.groupService.getGroupChats(id);
     }
 
     @Override
     @PutMapping("/update")
-    public ResponseDto<GroupDto> update(@Valid @RequestBody GroupDto dto, @RequestParam Integer id) {
+    public ResponseDto<GroupDto> update(@Valid @RequestBody GroupDto dto, @RequestParam(value = "id") Integer id) {
         return this.groupService.update(dto, id);
     }
 
     @Override
     @DeleteMapping("/delete")
-    public ResponseDto<GroupDto> delete(@RequestParam Integer id) {
+    public ResponseDto<GroupDto> delete(@RequestParam(value = "id") Integer id) {
         return this.groupService.delete(id);
     }
 

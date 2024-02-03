@@ -49,7 +49,6 @@ public class SecurityConfiguration {
                                         "*.html",
                                         "/api/v1/swagger.json"
                                 ).permitAll()
-                                //.requestMatchers(api).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)

@@ -19,17 +19,17 @@ public class AudioController {
     }
 
     @GetMapping("/download")
-    public ResponseDto<AudioResponse> download(@RequestParam Integer id) {
+    public ResponseDto<AudioResponse> download(@RequestParam(value = "id") Integer id) {
         return this.audioService.download(id);
     }
 
     @PutMapping("/update")
-    public ResponseDto<AudioResponse> update(@RequestBody MultipartFile file, @RequestParam Integer id) {
+    public ResponseDto<AudioResponse> update(@RequestBody MultipartFile file, @RequestParam(value = "id") Integer id) {
         return this.audioService.update(file, id);
     }
 
     @DeleteMapping("/delete")
-    ResponseDto<AudioResponse> delet(@RequestParam Integer id) {
+    ResponseDto<AudioResponse> delete(@RequestParam(value = "id") Integer id) {
         return this.audioService.delete(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.javaprojectspring_boot.user;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,32 +15,32 @@ public class UserController {
 
 
     @GetMapping("/get")
-    public ResponseEntity<UserDto> get(@RequestParam Integer id) {
+    public ResponseEntity<UserDto> get(@RequestParam(value = "id") Integer id) {
         return this.userService.get(id);
     }
 
     @GetMapping("/getContact")
-    public ResponseEntity<UserDto> getContact(@RequestParam Integer id) {
+    public ResponseEntity<UserDto> getContact(@RequestParam(value = "id") Integer id) {
         return this.userService.getContact(id);
     }
 
     @GetMapping("/getGroup")
-    public ResponseEntity<UserDto> getGroup(@RequestParam Integer id) {
+    public ResponseEntity<UserDto> getGroup(@RequestParam(value = "id") Integer id) {
         return this.userService.getGroup(id);
     }
 
     @GetMapping("/getChat")
-    public ResponseEntity<UserDto> getChat(@RequestParam Integer id) {
+    public ResponseEntity<UserDto> getChat(@RequestParam(value = "id") Integer id) {
         return this.userService.getChat(id);
     }
 
     @GetMapping("/getContactAndGroupAndChats")
-    public ResponseEntity<UserDto> getContactAndGroupAndChats(@RequestParam Integer id) {
+    public ResponseEntity<UserDto> getContactAndGroupAndChats(@RequestParam(value = "id") Integer id) {
         return this.userService.getContactAndGroupAndChats(id);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> update(@RequestParam Integer id, @RequestBody UserDto dto) {
+    public ResponseEntity<String> update(@RequestParam(value = "id") Integer id, @RequestBody UserDto dto) {
         return this.userService.update(id, dto);
     }
 

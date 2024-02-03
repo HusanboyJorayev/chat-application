@@ -23,29 +23,20 @@ public class ChatController implements SimpleCrud<Integer, ChatDto> {
 
     @Override
     @GetMapping("/get")
-    public ResponseDto<ChatDto> get(@RequestParam Integer id) {
+    public ResponseDto<ChatDto> get(@RequestParam(value = "id") Integer id) {
         return this.chatService.get(id);
     }
 
-   /* @GetMapping("/getSenderId")
-    public ResponseDto<List<ChatDto>> getSenderId(@RequestParam Integer id) {
-        return this.chatService.getSenderId(id);
-    }*/
-/*
-    @GetMapping("/getReceivedId")
-    public ResponseDto<List<ChatDto>> getReceivedId(@RequestParam Integer id) {
-        return this.chatService.getReceivedId(id);
-    }*/
 
     @Override
     @PutMapping("/update")
-    public ResponseDto<ChatDto> update(@Valid @RequestBody ChatDto dto, @RequestParam Integer id) {
+    public ResponseDto<ChatDto> update(@Valid @RequestBody ChatDto dto, @RequestParam(value = "id") Integer id) {
         return this.chatService.update(dto, id);
     }
 
     @Override
     @DeleteMapping("/delete")
-    public ResponseDto<ChatDto> delete(@RequestParam Integer id) {
+    public ResponseDto<ChatDto> delete(@RequestParam(value = "id") Integer id) {
         return this.chatService.delete(id);
     }
 
@@ -56,7 +47,7 @@ public class ChatController implements SimpleCrud<Integer, ChatDto> {
     }
 
     @GetMapping("/SendPhoneGetPhone")
-    public ResponseDto<List<ChatDto>> getAllGetterIdAndSenderId(@RequestParam @Param("g") String g, @RequestParam @Param("s") String s) {
+    public ResponseDto<List<ChatDto>> getAllGetterIdAndSenderId(@RequestParam(value = "g") String g, @RequestParam(value = "s") String s) {
         return this.chatService.getAllGetPhoneAndSendPhone(g, s);
     }
 }

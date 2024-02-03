@@ -22,19 +22,19 @@ public class ContactController implements SimpleCrud<Long, ContactDto> {
 
     @Override
     @GetMapping("/get")
-    public ResponseDto<ContactDto> get(@RequestParam Long id) {
+    public ResponseDto<ContactDto> get(@RequestParam(value = "id") Long id) {
         return this.contactService.get(id);
     }
 
     @Override
     @PutMapping("/update")
-    public ResponseDto<ContactDto> update(@Valid @RequestBody ContactDto dto, @RequestParam Long id) {
+    public ResponseDto<ContactDto> update(@Valid @RequestBody ContactDto dto, @RequestParam(value = "id") Long id) {
         return this.contactService.update(dto, id);
     }
 
     @Override
     @DeleteMapping("/delete")
-    public ResponseDto<ContactDto> delete(@RequestParam Long id) {
+    public ResponseDto<ContactDto> delete(@RequestParam(value = "id") Long id) {
         return this.contactService.delete(id);
     }
 
