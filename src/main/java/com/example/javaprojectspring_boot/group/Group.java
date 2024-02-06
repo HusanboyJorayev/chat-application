@@ -33,8 +33,9 @@ public class Group {
     private Integer addGroupId;
 
 
-    @OneToMany(mappedBy = "groupId",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<GroupChat>groupChats;
+    @OneToMany(mappedBy = "groupId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<GroupChat> groupChats;
+
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

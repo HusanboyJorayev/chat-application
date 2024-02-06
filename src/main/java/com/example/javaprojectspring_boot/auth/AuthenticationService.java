@@ -1,29 +1,19 @@
 package com.example.javaprojectspring_boot.auth;
 
 
-import com.example.javaprojectspring_boot.chat.ChatMapper;
 import com.example.javaprojectspring_boot.config.JwtService;
-import com.example.javaprojectspring_boot.contact.ContactMapper;
 import com.example.javaprojectspring_boot.dto.ErrorDto;
-import com.example.javaprojectspring_boot.dto.ResponseDto;
-import com.example.javaprojectspring_boot.group.GroupMapper;
 import com.example.javaprojectspring_boot.token.Token;
 import com.example.javaprojectspring_boot.token.TokenRepository;
 import com.example.javaprojectspring_boot.token.TokenType;
 import com.example.javaprojectspring_boot.user.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

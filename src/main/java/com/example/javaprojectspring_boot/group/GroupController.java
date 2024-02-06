@@ -3,6 +3,7 @@ package com.example.javaprojectspring_boot.group;
 import com.example.javaprojectspring_boot.contact.ContactDto;
 import com.example.javaprojectspring_boot.dto.ResponseDto;
 import com.example.javaprojectspring_boot.dto.SimpleCrud;
+import com.example.javaprojectspring_boot.user.UserDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -51,9 +52,9 @@ public class GroupController implements SimpleCrud<Integer, GroupDto> {
         return this.groupService.getAll();
     }
 
-/*    @GetMapping("/addUser")
-    public ResponseEntity<String> addUser(@RequestParam Integer userId, @RequestParam Integer groupId) {
-        return this.groupService.addUser(userId, groupId);
-    }*/
+    @GetMapping("/getAllWithUSers")
+    public ResponseDto<List<UserDto>> getAllWithUsers(@RequestParam(value = "id") Integer id) {
+        return this.groupService.getAllWithUsers(id);
+    }
 }
 

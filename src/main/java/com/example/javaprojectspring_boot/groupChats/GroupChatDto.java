@@ -21,7 +21,6 @@ public class GroupChatDto {
     @NotNull(message = "groupId cannot be null")
     private Integer groupId;
 
-    private List<UserDto> usersList;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

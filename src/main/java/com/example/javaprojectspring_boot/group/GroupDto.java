@@ -6,6 +6,8 @@ import com.example.javaprojectspring_boot.chat.ChatDto;
 import com.example.javaprojectspring_boot.groupChats.GroupChat;
 import com.example.javaprojectspring_boot.groupChats.GroupChatDto;
 import com.example.javaprojectspring_boot.user.GroupRole;
+import com.example.javaprojectspring_boot.user.User;
+import com.example.javaprojectspring_boot.user.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.EnumType;
@@ -35,7 +37,8 @@ public class GroupDto {
 
     private Integer addGroupId;
 
-    private List<GroupChatDto>groupChats;
+    private List<GroupChatDto> groupChats;
+
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

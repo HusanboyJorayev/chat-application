@@ -26,10 +26,10 @@ public class GroupChatController implements SimpleCrud<Integer, GroupChatDto> {
         return this.groupChatService.get(id);
     }
 
-    @GetMapping("/getWithUsers")
+  /*  @GetMapping("/getWithUsers")
     public ResponseDto<GroupChatDto> getWithUsers(@RequestParam(value = "id") Integer id) {
         return this.groupChatService.getWithUsers(id);
-    }
+    }*/
 
     @Override
     @PutMapping("/update")

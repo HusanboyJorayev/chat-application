@@ -180,26 +180,31 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
         } catch (Exception e) {
             return ResponseDto.<List<GroupDto>>builder()
                     .code(-1)
-                    .message("groups while getting  all")
+                    .message("groups while getting  all error")
                     .build();
         }
     }
-
-/* public ResponseEntity<String> addUser(Integer userId, Integer groupId) {
-        var group = this.groupRepository.findByIdAndDeletedAtIsNull(groupId);
-        var optional = this.userRepository.addUser(userId);
-        if (optional.isEmpty() || !optional.get().isAddGroup()) {
-            return ResponseEntity.badRequest().body("You cannot add this user");
+    public ResponseDto<List<UserDto>> getAllWithUsers(Integer id) {
+        try {
+            List<User> groupWithUsers = this.groupRepository.getAllGroupWithUsers(id);
+            if (groupWithUsers.isEmpty()) {
+                return ResponseDto.<List<UserDto>>builder()
+                        .code(-1)
+                        .message("groups are not found")
+                        .build();
+            }
+            return ResponseDto.<List<UserDto>>builder()
+                    .success(true)
+                    .message("Ok")
+                    .data(groupWithUsers.stream().map(this.userMapper::toDto).toList())
+                    .build();
+        } catch (Exception e) {
+            return ResponseDto.<List<UserDto>>builder()
+                    .code(-1)
+                    .message("groups while getting  all error")
+                    .build();
         }
-        if (group.isEmpty()) {
-            return ResponseEntity.badRequest().body("this group is not exist");
-        }
-        var g = group.get();
-        g.setGroupRole(GroupRole.USER);
-        g.setAddGroupId(userId);
-        this.groupRepository.save(g);
-        return ResponseEntity.ok().body("User add successfully");
-    }*/
+    }
 
     public void checkUser(Integer id) {
         Optional<Group> optional = this.groupRepository.findByIdAndDeletedAtIsNull(id);

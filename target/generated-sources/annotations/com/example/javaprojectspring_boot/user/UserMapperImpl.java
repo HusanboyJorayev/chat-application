@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-03T17:25:04+0500",
+    date = "2024-02-06T12:10:43+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20.0.2 (Oracle Corporation)"
 )
 @Component
@@ -26,7 +26,7 @@ public class UserMapperImpl extends UserMapper {
         user.password( dto.getPassword() );
         user.key1( dto.getKey1() );
         user.key2( dto.getKey2() );
-        user.groupChatId( dto.getGroupChatId() );
+        user.groupId( dto.getGroupId() );
 
         return user.build();
     }
@@ -46,7 +46,7 @@ public class UserMapperImpl extends UserMapper {
         userDto.password( user.getPassword() );
         userDto.key1( user.getKey1() );
         userDto.key2( user.getKey2() );
-        userDto.groupChatId( user.getGroupChatId() );
+        userDto.groupId( user.getGroupId() );
         userDto.role( user.getRole() );
         userDto.createdAt( user.getCreatedAt() );
         userDto.updatedAt( user.getUpdatedAt() );
@@ -70,7 +70,7 @@ public class UserMapperImpl extends UserMapper {
         userDto.password( user.getPassword() );
         userDto.key1( user.getKey1() );
         userDto.key2( user.getKey2() );
-        userDto.groupChatId( user.getGroupChatId() );
+        userDto.groupId( user.getGroupId() );
         userDto.role( user.getRole() );
         userDto.createdAt( user.getCreatedAt() );
         userDto.updatedAt( user.getUpdatedAt() );
@@ -96,7 +96,7 @@ public class UserMapperImpl extends UserMapper {
         userDto.password( user.getPassword() );
         userDto.key1( user.getKey1() );
         userDto.key2( user.getKey2() );
-        userDto.groupChatId( user.getGroupChatId() );
+        userDto.groupId( user.getGroupId() );
         userDto.role( user.getRole() );
         userDto.createdAt( user.getCreatedAt() );
         userDto.updatedAt( user.getUpdatedAt() );
@@ -122,7 +122,7 @@ public class UserMapperImpl extends UserMapper {
         userDto.password( user.getPassword() );
         userDto.key1( user.getKey1() );
         userDto.key2( user.getKey2() );
-        userDto.groupChatId( user.getGroupChatId() );
+        userDto.groupId( user.getGroupId() );
         userDto.role( user.getRole() );
         userDto.createdAt( user.getCreatedAt() );
         userDto.updatedAt( user.getUpdatedAt() );
@@ -148,7 +148,7 @@ public class UserMapperImpl extends UserMapper {
         userDto.password( user.getPassword() );
         userDto.key1( user.getKey1() );
         userDto.key2( user.getKey2() );
-        userDto.groupChatId( user.getGroupChatId() );
+        userDto.groupId( user.getGroupId() );
         userDto.role( user.getRole() );
         userDto.createdAt( user.getCreatedAt() );
         userDto.updatedAt( user.getUpdatedAt() );
@@ -189,8 +189,8 @@ public class UserMapperImpl extends UserMapper {
             user.setKey2( dto.getKey2() );
         }
         user.setAddGroup( dto.isAddGroup() );
-        if ( dto.getGroupChatId() != null ) {
-            user.setGroupChatId( dto.getGroupChatId() );
+        if ( dto.getGroupId() != null ) {
+            user.setGroupId( dto.getGroupId() );
         }
         if ( dto.getCreatedAt() != null ) {
             user.setCreatedAt( dto.getCreatedAt() );

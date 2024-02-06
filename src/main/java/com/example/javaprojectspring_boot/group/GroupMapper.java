@@ -19,18 +19,15 @@ public abstract class GroupMapper {
     @Mapping(ignore = true, target = "updatedAt")
     @Mapping(ignore = true, target = "deletedAt")
     @Mapping(ignore = true, target = "groupChats")
-   // @Mapping(ignore = true, target = "usersList")
     public abstract Group toEntity(GroupDto dto);
 
     @Mapping(ignore = true, target = "groupChats")
-   // @Mapping(ignore = true, target = "usersList")
     public abstract GroupDto toDto(Group groups);
 
     @Mapping(target = "groupChats", expression = "java(groups.getGroupChats().stream().map(this.groupChatMapper::toDto).toList())")
     public abstract GroupDto toDtoWithGroupChats(Group groups);
 
     @Mapping(ignore = true, target = "groupChats")
-   // @Mapping(ignore = true, target = "usersList")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void update(@MappingTarget Group groups, GroupDto dto);
 

@@ -34,6 +34,11 @@ public class UserController {
         return this.userService.getChat(id);
     }
 
+    @GetMapping("/getUserWithChats")
+    public ResponseEntity<List<UserDto>> getUsersWithChatting(@RequestParam(value = "id") Integer id) {
+        return this.userService.getUsersWithChatting(id);
+    }
+
     @GetMapping("/getContactAndGroupAndChats")
     public ResponseEntity<UserDto> getContactAndGroupAndChats(@RequestParam(value = "id") Integer id) {
         return this.userService.getContactAndGroupAndChats(id);

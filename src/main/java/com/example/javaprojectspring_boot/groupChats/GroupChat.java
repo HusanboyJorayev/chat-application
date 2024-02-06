@@ -21,10 +21,6 @@ public class GroupChat {
     private String message;
     private Integer groupId;
 
-    // UserList groupni o'zida bo'ladi
-    @OneToMany(mappedBy = "groupChatId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<User> usersList;
-
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -35,7 +35,8 @@ public class User  {
     private String key2;
 
     private boolean addGroup;
-    private Integer groupChatId;
+
+    private Integer groupId;
 
 
     @Enumerated(EnumType.STRING)
@@ -51,8 +52,6 @@ public class User  {
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Group> groups;
 
-    //private List<User> chatUsersList;
-    //private List<General> general;//general listi chatUsersList va groups listlarini o'z ichiga olgan list bo'ladi, General klassi User va Group klasslarini o'z ichiga olgan bo'ladi
 
     @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Chat>messages;

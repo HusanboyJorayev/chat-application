@@ -67,7 +67,7 @@ public class GroupChatService implements SimpleCrud<Integer, GroupChatDto> {
                     .build();
         }
     }
-    public ResponseDto<GroupChatDto> getWithUsers(Integer id) {
+/*    public ResponseDto<GroupChatDto> getWithUsers(Integer id) {
         try {
             return this.groupChatRepository.findByIdAndDeletedAtIsNull(id)
                     .map(groupChat -> ResponseDto.<GroupChatDto>builder()
@@ -86,7 +86,7 @@ public class GroupChatService implements SimpleCrud<Integer, GroupChatDto> {
                     .message("groupChat while getting error")
                     .build();
         }
-    }
+    }*/
 
     @Override
     public ResponseDto<GroupChatDto> update(GroupChatDto dto, Integer id) {

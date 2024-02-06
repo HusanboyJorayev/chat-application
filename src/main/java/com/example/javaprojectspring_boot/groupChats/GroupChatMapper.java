@@ -10,31 +10,24 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring",imports = Collectors.class)
 public abstract class GroupChatMapper {
 
-    @Autowired
+   /* @Autowired
     @Lazy
-    protected UserMapper userMapper;
+    protected UserMapper;*/
 
     @Mapping(ignore = true, target = "id")
     @Mapping(ignore = true, target = "createdAt")
     @Mapping(ignore = true, target = "updatedAt")
     @Mapping(ignore = true, target = "deletedAt")
-    @Mapping(ignore = true, target = "usersList")
     public abstract GroupChat toEntity(GroupChatDto dto);
 
 
-    @Mapping(ignore = true, target = "usersList")
     public abstract GroupChatDto toDto(GroupChat groupChat);
 
-    @Mapping(target = "usersList",expression = "java(groupChat.getUsersList().stream().map(this.userMapper::toDto).toList())")
-    public abstract GroupChatDto toDtoWithUser(GroupChat groupChat);
 
-
-    @Mapping(ignore = true, target = "usersList")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void update(@MappingTarget GroupChat groupChat, GroupChatDto dto);
 
 
     public void view(GroupChat groupChat,GroupChatDto dto){
-        dto.setUsersList(groupChat.getUsersList().stream().map(this.userMapper::toDto).toList());
     }
 }

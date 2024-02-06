@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-03T17:25:04+0500",
+    date = "2024-02-06T12:10:46+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20.0.2 (Oracle Corporation)"
 )
 @Component
@@ -40,26 +40,6 @@ public class GroupChatMapperImpl extends GroupChatMapper {
         groupChatDto.createdAt( groupChat.getCreatedAt() );
         groupChatDto.updatedAt( groupChat.getUpdatedAt() );
         groupChatDto.deletedAt( groupChat.getDeletedAt() );
-
-        return groupChatDto.build();
-    }
-
-    @Override
-    public GroupChatDto toDtoWithUser(GroupChat groupChat) {
-        if ( groupChat == null ) {
-            return null;
-        }
-
-        GroupChatDto.GroupChatDtoBuilder groupChatDto = GroupChatDto.builder();
-
-        groupChatDto.id( groupChat.getId() );
-        groupChatDto.message( groupChat.getMessage() );
-        groupChatDto.groupId( groupChat.getGroupId() );
-        groupChatDto.createdAt( groupChat.getCreatedAt() );
-        groupChatDto.updatedAt( groupChat.getUpdatedAt() );
-        groupChatDto.deletedAt( groupChat.getDeletedAt() );
-
-        groupChatDto.usersList( groupChat.getUsersList().stream().map(this.userMapper::toDto).toList() );
 
         return groupChatDto.build();
     }

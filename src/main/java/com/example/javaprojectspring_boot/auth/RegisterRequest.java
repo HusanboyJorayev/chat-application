@@ -16,8 +16,8 @@ public class RegisterRequest {
     private String lastname;
     @NotBlank(message = "password cannot be null or empty")
     private String password;
-    @NotBlank(message = "username cannot be null or empty")
-    private String username;
+   /* @NotBlank(message = "username cannot be null or empty")
+    private String username;*/
     @NotBlank(message = "phoneNumber cannot be null or empty")
     private String phoneNumber;
 }

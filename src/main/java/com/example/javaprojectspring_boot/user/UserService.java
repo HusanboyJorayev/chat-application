@@ -1,6 +1,8 @@
 package com.example.javaprojectspring_boot.user;
 
+import com.example.javaprojectspring_boot.chat.Chat;
 import com.example.javaprojectspring_boot.chat.ChatMapper;
+import com.example.javaprojectspring_boot.chat.ChatRepository;
 import com.example.javaprojectspring_boot.contact.ContactMapper;
 import com.example.javaprojectspring_boot.group.GroupMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class UserService {
     private final ContactMapper contactMapper;
     private final GroupMapper groupMapper;
     private final UserMapper userMapper;
+    private final ChatRepository chatRepository;
 
 
     public ResponseEntity<UserDto> get(Integer id) {
@@ -62,6 +65,7 @@ public class UserService {
         return ResponseEntity.ok().body(dto);
     }
 
+
     public ResponseEntity<UserDto> getContactAndGroupAndChats(Integer id) {
         Optional<User> optional = this.userRepository.findByIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
@@ -97,6 +101,30 @@ public class UserService {
             return ResponseEntity.badRequest().body(null);
         }
         return ResponseEntity.ok().body(list.stream().map(this.userMapper::toDto).toList());
+    }
+
+    public ResponseEntity<List<UserDto>> getUsersWithChatting(Integer id) {
+        List<Chat> optional = this.chatRepository.getChatsWithId(id);
+        if (optional.isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        List<String> getPhone = new ArrayList<>();
+        for (Chat chat : optional) {
+            getPhone.add(chat.getGetPhone());
+        }
+        List<User> userList = this.userRepository.getAllUsers();
+        if (userList.isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        List<User> users = new ArrayList<>();
+        for (User user : userList) {
+            for (String string : getPhone) {
+                if (user.getPhoneNumber().equals(string)) {
+                    users.add(user);
+                }
+            }
+        }
+        return ResponseEntity.badRequest().body(users.stream().map(this.userMapper::toDto).toList());
     }
 
 }

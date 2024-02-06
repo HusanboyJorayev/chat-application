@@ -23,7 +23,10 @@ public class ChatDto {
     @NotBlank(message = "sendPhone cannot be null or empty")
     private String sendPhone;
 
+
+    @NotNull(message = "userId cannot be null")
     private Integer userId;
+    @NotNull(message = "groupId cannot be null")
     private Integer groupId;
 
 

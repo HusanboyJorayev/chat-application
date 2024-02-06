@@ -37,7 +37,7 @@ public class UserDto implements UserDetails {
     private String key2;
     private boolean addGroup;
 
-    private Integer groupChatId;
+    private Integer groupId;
 
     private List<ContactDto> contacts;
     private List<GroupDto> groups;
