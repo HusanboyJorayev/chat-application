@@ -27,15 +27,25 @@ public class ContactController implements SimpleCrud<Long, ContactDto> {
     }
 
     @Override
-    @PutMapping("/update")
-    public ResponseDto<ContactDto> update(@Valid @RequestBody ContactDto dto, @RequestParam(value = "id") Long id) {
-        return this.contactService.update(dto, id);
+    public ResponseDto<ContactDto> update(ContactDto dto, Long id) {
+        return null;
+    }
+
+    @PutMapping("/updateContact")
+    public ResponseDto<ContactDto> updateContact(@Valid @RequestBody ContactDto dto,
+                                                 @RequestParam(value = "id") Long id,
+                                                 @RequestParam(value = "id") Integer userId) {
+        return this.contactService.updateContact(dto, id, userId);
     }
 
     @Override
-    @DeleteMapping("/delete")
-    public ResponseDto<ContactDto> delete(@RequestParam(value = "id") Long id) {
-        return this.contactService.delete(id);
+    public ResponseDto<ContactDto> delete(Long id) {
+        return null;
+    }
+
+    @DeleteMapping("/deleteContact")
+    public ResponseDto<ContactDto> deleteContact(@RequestParam(value = "id") Integer id, @RequestParam(value = "id") Long contactId) {
+        return this.contactService.deleteContact(id, contactId);
     }
 
     @Override

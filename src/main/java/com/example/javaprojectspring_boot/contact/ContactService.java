@@ -3,17 +3,21 @@ package com.example.javaprojectspring_boot.contact;
 import com.example.javaprojectspring_boot.dto.ErrorDto;
 import com.example.javaprojectspring_boot.dto.ResponseDto;
 import com.example.javaprojectspring_boot.dto.SimpleCrud;
+import com.example.javaprojectspring_boot.user.User;
+import com.example.javaprojectspring_boot.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ContactService implements SimpleCrud<Long, ContactDto> {
     private final ContactValidation contactValidation;
     private final ContactRepository contactRepository;
+    private final UserRepository userRepository;
     private final ContactMapper contactMapper;
 
     @Override
@@ -39,7 +43,7 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
         } catch (Exception e) {
             return ResponseDto.<ContactDto>builder()
                     .code(-1)
-                    .message("Type while saving error")
+                    .message("contact while saving error")
                     .build();
         }
     }
@@ -55,25 +59,36 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
                             .build())
                     .orElse(ResponseDto.<ContactDto>builder()
                             .code(-1)
-                            .message("type is not found")
+                            .message("contact is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<ContactDto>builder()
                     .code(-1)
-                    .message("Type while getting error")
+                    .message("contact while getting error")
                     .build();
         }
     }
 
     @Override
     public ResponseDto<ContactDto> update(ContactDto dto, Long id) {
+        return null;
+    }
+
+    public ResponseDto<ContactDto> updateContact(ContactDto dto, Long id, Integer userId) {
         List<ErrorDto> errors = this.contactValidation.validate(dto);
         if (!errors.isEmpty()) {
             return ResponseDto.<ContactDto>builder()
                     .code(-3)
                     .message("Validation error")
                     .error(errors)
+                    .build();
+        }
+        List<User> users = this.userRepository.deleteContact(userId);
+        if (users.isEmpty()) {
+            return ResponseDto.<ContactDto>builder()
+                    .code(-1)
+                    .message("You cannot update this contact")
                     .build();
         }
         try {
@@ -91,41 +106,40 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
                     })
                     .orElse(ResponseDto.<ContactDto>builder()
                             .code(-1)
-                            .message("Type is not found")
+                            .message("contact is not found")
                             .build());
 
         } catch (Exception e) {
             return ResponseDto.<ContactDto>builder()
                     .code(-1)
-                    .message("type while updating error")
+                    .message("contact while updating error")
                     .build();
         }
     }
 
     @Override
     public ResponseDto<ContactDto> delete(Long id) {
-        try {
-            return this.contactRepository.findByIdAndDeletedAtIsNull(id)
-                    .map(contact -> {
-                        contact.setDeletedAt(LocalDateTime.now());
-                        this.contactRepository.delete(contact);
-                        return ResponseDto.<ContactDto>builder()
-                                .success(true)
-                                .message("Ok")
-                                .data(this.contactMapper.toDto(contact))
-                                .build();
-                    })
-                    .orElse(ResponseDto.<ContactDto>builder()
-                            .code(-1)
-                            .message("Type is not found")
-                            .build());
+        return null;
+    }
 
-        } catch (Exception e) {
+    public ResponseDto<ContactDto> deleteContact(Integer id, Long contactId) {
+        Optional<Contact> optional = this.contactRepository.findByIdAndDeletedAtIsNull(contactId);
+        List<User> users = this.userRepository.deleteContact(id);
+        if (users.isEmpty()) {
             return ResponseDto.<ContactDto>builder()
                     .code(-1)
-                    .message("Type while deleting error")
+                    .message("You cannot delete this contact")
                     .build();
         }
+        Contact contact = optional.get();
+        contact.setDeletedAt(LocalDateTime.now());
+        this.contactRepository.delete(contact);
+        return ResponseDto.<ContactDto>builder()
+                .success(true)
+                .message("Contact deleted successfully")
+                .data(this.contactMapper.toDto(contact))
+                .build();
+
     }
 
     @Override
@@ -135,7 +149,7 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
             if (categories.isEmpty()) {
                 return ResponseDto.<List<ContactDto>>builder()
                         .code(-1)
-                        .message("Types are not found")
+                        .message("contacts are not found")
                         .build();
             }
             return ResponseDto.<List<ContactDto>>builder()
@@ -146,7 +160,7 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
         } catch (Exception e) {
             return ResponseDto.<List<ContactDto>>builder()
                     .code(-1)
-                    .message("Types while getting all")
+                    .message("contacts while getting all")
                     .build();
         }
     }

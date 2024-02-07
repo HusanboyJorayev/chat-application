@@ -21,4 +21,14 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
             select u from User as u inner join Group as g on u.groupId=g.id
             """)
     List<User> getAllGroupWithUsers(Integer id);
+
+    @Query("""
+               select g from Group as g where g.id=:id
+            """)
+    List<Group> addGroup(Integer id);
+
+    @Query("""
+            select g from Group as g where g.addGroupId=:id
+            """)
+    List<Group> getUserWithAddedGroup(Integer id);
 }

@@ -64,6 +64,7 @@ com\example\javaprojectspring_boot\groupChats\GroupChatDto.class
 com\example\javaprojectspring_boot\user\UserDto.class
 com\example\javaprojectspring_boot\groupChats\GroupChatService.class
 com\example\javaprojectspring_boot\file\Audio$AudioBuilder.class
+com\example\javaprojectspring_boot\websocket\WebSocketConfiguration.class
 com\example\javaprojectspring_boot\group\Group.class
 com\example\javaprojectspring_boot\config\JwtService.class
 com\example\javaprojectspring_boot\group\GroupDto.class
