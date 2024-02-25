@@ -35,7 +35,6 @@ public class UserDto implements UserDetails {
     private String password;
     private String key1;
     private String key2;
-    private boolean addGroup;
 
     private Integer groupId;
 

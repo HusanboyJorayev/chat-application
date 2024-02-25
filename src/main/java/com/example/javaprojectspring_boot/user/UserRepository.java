@@ -39,8 +39,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 
     @Query("""
-                     select  u from User as u inner join Contact as c on c.userId=:id
+                     select  u from User as u inner join Contact as c on c.userId=:userId and c.id=:contactId and u.id=:userId
             """)
-    List<User> addUser(Integer id);
+    User addUser(@Param(value = "userId") Integer userId, @Param(value = "contactId") Integer contactId);
 
 }

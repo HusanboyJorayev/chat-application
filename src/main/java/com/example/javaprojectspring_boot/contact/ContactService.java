@@ -3,12 +3,18 @@ package com.example.javaprojectspring_boot.contact;
 import com.example.javaprojectspring_boot.dto.ErrorDto;
 import com.example.javaprojectspring_boot.dto.ResponseDto;
 import com.example.javaprojectspring_boot.dto.SimpleCrud;
+import com.example.javaprojectspring_boot.group.Group;
+import com.example.javaprojectspring_boot.group.GroupDto;
+import com.example.javaprojectspring_boot.group.GroupMapper;
+import com.example.javaprojectspring_boot.group.GroupRepository;
 import com.example.javaprojectspring_boot.user.User;
 import com.example.javaprojectspring_boot.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +24,8 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
     private final ContactValidation contactValidation;
     private final ContactRepository contactRepository;
     private final UserRepository userRepository;
+    private final GroupRepository groupRepository;
+    private final GroupMapper groupMapper;
     private final ContactMapper contactMapper;
 
     @Override
@@ -163,5 +171,24 @@ public class ContactService implements SimpleCrud<Long, ContactDto> {
                     .message("contacts while getting all")
                     .build();
         }
+    }
+    public ResponseEntity<List<GroupDto>> getAddGroupsByContactId(Long id) {
+        Optional<Contact> optional = this.contactRepository.findByIdAndDeletedAtIsNull(id);
+        List<Group> groupList = this.groupRepository.getAllGroups();
+        if (optional.isEmpty()) {
+            return ResponseEntity.badRequest().body(List.of(GroupDto.builder()
+                    .build()));
+        }
+        var contact = optional.get();
+        String s= contact.getAddGroupsIds();
+        List<Group> groups = new ArrayList<>();
+        for (Group group : groupList) {
+            for (int i=0;i<s.length();i++) {
+                if (group.getId().toString().equals(String.valueOf(s.charAt(i)))){
+                    groups.add(group);
+                }
+            }
+        }
+        return ResponseEntity.ok().body(groups.stream().map(this.groupMapper::toDto).toList());
     }
 }

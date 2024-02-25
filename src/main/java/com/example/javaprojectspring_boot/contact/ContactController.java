@@ -2,8 +2,10 @@ package com.example.javaprojectspring_boot.contact;
 
 import com.example.javaprojectspring_boot.dto.ResponseDto;
 import com.example.javaprojectspring_boot.dto.SimpleCrud;
+import com.example.javaprojectspring_boot.group.GroupDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,5 +54,10 @@ public class ContactController implements SimpleCrud<Long, ContactDto> {
     @GetMapping("/getAll")
     public ResponseDto<List<ContactDto>> getAll() {
         return this.contactService.getAll();
+    }
+
+    @GetMapping("/getAddGroupsByContactId")
+    public ResponseEntity<List<GroupDto>> getAddGroupsByContactId(@RequestParam(value = "id") Long id) {
+        return this.contactService.getAddGroupsByContactId(id);
     }
 }

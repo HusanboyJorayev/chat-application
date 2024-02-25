@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-07T23:28:51+0500",
+    date = "2024-02-25T22:30:29+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20.0.2 (Oracle Corporation)"
 )
 @Component
@@ -25,7 +25,6 @@ public class ChatMapperImpl extends ChatMapper {
         chatDto.getPhone( chat.getGetPhone() );
         chatDto.sendPhone( chat.getSendPhone() );
         chatDto.userId( chat.getUserId() );
-        chatDto.groupId( chat.getGroupId() );
         chatDto.createdAt( chat.getCreatedAt() );
         chatDto.updatedAt( chat.getUpdatedAt() );
         chatDto.deletedAt( chat.getDeletedAt() );
@@ -46,7 +45,6 @@ public class ChatMapperImpl extends ChatMapper {
         chat.getPhone( dto.getGetPhone() );
         chat.sendPhone( dto.getSendPhone() );
         chat.userId( dto.getUserId() );
-        chat.groupId( dto.getGroupId() );
 
         return chat.build();
     }
@@ -72,9 +70,6 @@ public class ChatMapperImpl extends ChatMapper {
         }
         if ( dto.getUserId() != null ) {
             chat.setUserId( dto.getUserId() );
-        }
-        if ( dto.getGroupId() != null ) {
-            chat.setGroupId( dto.getGroupId() );
         }
         if ( dto.getCreatedAt() != null ) {
             chat.setCreatedAt( dto.getCreatedAt() );

@@ -16,4 +16,5 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
             select c from Contact as c
             """)
     List<Contact> getAllContacts();
+
 }

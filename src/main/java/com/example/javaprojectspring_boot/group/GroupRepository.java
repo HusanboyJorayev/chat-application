@@ -3,6 +3,7 @@ package com.example.javaprojectspring_boot.group;
 import com.example.javaprojectspring_boot.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,14 +19,14 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
     List<Group> getAllGroups();
 
     @Query("""
-            select u from User as u inner join Group as g on u.groupId=g.id
+            select u from User as u inner join Group as g on g.id in (1,2,3)
             """)
-    List<User> getAllGroupWithUsers(Integer id);
+    List<User> getGroupWithUsers(Integer id);
 
     @Query("""
-               select g from Group as g where g.id=:id
+               select g from Group as g where g.id=:groupId
             """)
-    List<Group> addGroup(Integer id);
+    List<Group> addGroup(@Param(value = "groupId") Integer id);
 
     @Query("""
             select g from Group as g where g.addGroupId=:id

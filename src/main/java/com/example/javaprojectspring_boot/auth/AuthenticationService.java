@@ -75,7 +75,7 @@ public class AuthenticationService {
 
     private void saveUserToken(User savedUser, String jwt) {
         var token = Token.builder()
-                .user(savedUser)
+                //.user(savedUser)
                 .token(jwt)
                 .tokenType(TokenType.BEARER)
                 .build();

@@ -19,6 +19,7 @@ public class ContactDto {
     @NotBlank(message = "username cannot be null or empty")
     private String username;
     private Integer userId;
+    private Integer addGroupId;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

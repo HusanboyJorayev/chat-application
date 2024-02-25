@@ -1,6 +1,8 @@
 package com.example.javaprojectspring_boot.group;
 
 import com.example.javaprojectspring_boot.chat.ChatDto;
+import com.example.javaprojectspring_boot.contact.Contact;
+import com.example.javaprojectspring_boot.contact.ContactRepository;
 import com.example.javaprojectspring_boot.dto.ErrorDto;
 import com.example.javaprojectspring_boot.dto.ResponseDto;
 import com.example.javaprojectspring_boot.dto.SimpleCrud;
@@ -11,9 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +23,7 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
     private final UserRepository userRepository;
     private final GroupValidation groupValidation;
     private final GroupRepository groupRepository;
+    private final ContactRepository contactRepository;
 
     @Override
     public ResponseDto<GroupDto> create(GroupDto dto) {
@@ -97,7 +98,6 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
         }
     }
 
-
     @Override
     public ResponseDto<GroupDto> update(GroupDto dto, Integer id) {
         return null;
@@ -143,7 +143,6 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
         try {
             return this.groupRepository.findByIdAndDeletedAtIsNull(id)
                     .map(group -> {
-                        //checkUser(group.getUserId());
                         group.setUpdatedAt(LocalDateTime.now());
                         this.groupMapper.update(group, dto);
                         this.groupRepository.save(group);
@@ -217,9 +216,9 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
         }
     }
 
-    public ResponseDto<List<UserDto>> getAllWithUsers(Integer id) {
+ /*   public ResponseDto<List<UserDto>> getAllWithUsers(Integer id) {
         try {
-            List<User> groupWithUsers = this.groupRepository.getAllGroupWithUsers(id);
+            List<User> groupWithUsers = this.groupRepository.getGroupWithUsers(id);
             if (groupWithUsers.isEmpty()) {
                 return ResponseDto.<List<UserDto>>builder()
                         .code(-1)
@@ -237,24 +236,46 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
                     .message("groups while getting  all error")
                     .build();
         }
-    }
+    }*/
 
-    public String addUserToGroup(Integer userId, Integer groupId) {
+    public String addUserToGroup(Integer userId, Integer groupId, Integer contactId) {
 
-        List<User> userList = this.userRepository.addUser(userId);
+        User user = this.userRepository.addUser(userId, contactId);
         List<Group> groupList = this.groupRepository.addGroup(groupId);
-        if (userList.isEmpty()) {
+        Optional<Contact> contacts = this.contactRepository.findByIdAndDeletedAtIsNull((long) contactId);
+        if (contacts.isEmpty()) {
+            return "Contacts are not found";
+        }
+        var contact = contacts.get();
+        if (user == null) {
             return "You don't have this contact";
         }
         if (groupList.isEmpty()) {
             return "Group is not found";
         }
         int count = 0;
+        String sU="",sC="";
+        List<Integer> addGroupIds = new ArrayList<>();
+        List<Integer> addUserToGroupIds = new ArrayList<>();
         for (Group group : groupList) {
-            if (!group.getUserId().equals(userId) && group.getAddGroupId() == null) {
+            if ((group.getUserId() != null)) {
                 count++;
-                group.setAddGroupId(userId);
-                this.groupRepository.save(group);
+                if (!user.getId().equals(group.getUserId())) {
+                    addUserToGroupIds.add(group.getId());
+                    user.setIntegers(addUserToGroupIds);
+                    sU+=""+group.getId();
+                    System.out.println(sU);
+                    user.setAddGroupIds(sU);
+                    this.userRepository.save(user);
+                }
+                if (contact.getUserId().equals(user.getId())) {
+                    addGroupIds.add(group.getId());
+                    contact.setIntegers(addGroupIds);
+                    sC+=""+group.getId();
+                    System.out.println(sC);
+                    contact.setAddGroupsIds(sC);
+                    this.contactRepository.save(contact);
+                }
             }
         }
         if (count == 0) {
@@ -263,12 +284,5 @@ public class GroupService implements SimpleCrud<Integer, GroupDto> {
         return "User added successfully";
     }
 
-    public void checkUser(Integer id) {
-        Optional<Group> optional = this.groupRepository.findByIdAndDeletedAtIsNull(id);
-        var group = optional.get();
-        if (!group.getGroupRole().equals(GroupRole.ADMIN)) {
-            System.out.println(("you cannot update,delete and add User this group"));
-        }
-    }
 }
 

@@ -19,13 +19,13 @@ public class LogoutService implements LogoutHandler {
                        HttpServletResponse response,
                        Authentication authentication) {
 
-        final String authHeade = request.getHeader("Authorization");
+        final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
-        if (authHeade == null || !authHeade.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return;
         }
-        jwt = authHeade.substring(7);
+        jwt = authHeader.substring(7);
         var storedToken = tokenRepository.findByToken(jwt)
                 .orElse(null);
         if (storedToken != null) {

@@ -58,14 +58,16 @@ public class GroupController implements SimpleCrud<Integer, GroupDto> {
         return this.groupService.getAll();
     }
 
-    @GetMapping("/getAllWithUsers")
+   /* @GetMapping("/getAllWithUsers")
     public ResponseDto<List<UserDto>> getAllWithUsers(@RequestParam(value = "id") Integer id) {
         return this.groupService.getAllWithUsers(id);
-    }
+    }*/
 
     @GetMapping("/addUserToGroup")
-    public String addGroup(@RequestParam(value = "userId") Integer userId, @RequestParam(value = "groupId") Integer groupId) {
-        return this.groupService.addUserToGroup(userId, groupId);
+    public String addGroup(@RequestParam(value = "userId") Integer userId,
+                           @RequestParam(value = "groupId") Integer groupId,
+                           @RequestParam(value = "contactId")Integer contactId) {
+        return this.groupService.addUserToGroup(userId, groupId,contactId);
     }
 
     @GetMapping("/getUserWithAddedGroup")

@@ -24,7 +24,6 @@ public class Chat {
     private String sendPhone;
 
     private Integer userId;
-    private Integer groupId;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

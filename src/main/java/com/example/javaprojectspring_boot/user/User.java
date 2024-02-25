@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,17 +35,17 @@ public class User  {
     private String key1;
     private String key2;
 
-    private boolean addGroup;
-
     private Integer groupId;
 
+    @ElementCollection
+    @Column(name = "add_group_ids")
+    private List<Integer> integers;
+
+    private String addGroupIds;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;

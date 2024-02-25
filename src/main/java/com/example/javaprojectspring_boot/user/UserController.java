@@ -1,5 +1,6 @@
 package com.example.javaprojectspring_boot.user;
 
+import com.example.javaprojectspring_boot.group.GroupDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -49,9 +50,18 @@ public class UserController {
         return this.userService.update(id, dto);
     }
 
+    @GetMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "adminId") Integer adminId) {
+        return this.userService.delete(userId, adminId);
+    }
+
     @GetMapping("/getAllUsers")
-    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         return this.userService.getAllUsers();
+    }
+
+    @GetMapping("/getAddGroupsByContactId")
+    public ResponseEntity<List<GroupDto>> getAddGroupsByContactId(@RequestParam(value = "id") Integer id) {
+        return this.userService.getAddGroupsByUserId(id);
     }
 }

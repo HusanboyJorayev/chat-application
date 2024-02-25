@@ -24,10 +24,9 @@ public class ChatDto {
     private String sendPhone;
 
 
-    @NotNull(message = "userId cannot be null")
+    //@NotNull(message = "userId cannot be null")
     private Integer userId;
-    @NotNull(message = "groupId cannot be null")
-    private Integer groupId;
+
 
 
     private LocalDateTime createdAt;
