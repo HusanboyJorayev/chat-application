@@ -17,26 +17,24 @@ import java.time.LocalDateTime;
 public class DefaultAdmin {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TokenRepository tokenRepository;
 
 
     @PostConstruct
     public void saveAdmin() {
 
-        userRepository.findByPhoneNumber("+998941490908").ifPresent(userRepository::delete);
+        userRepository.findByPhoneNumber("998941490908").
+                ifPresentOrElse(userRepository::delete, () -> {
+                    User admin = User.builder()
+                            .firstName("admin")
+                            .lastName("admin")
+                            .phoneNumber("998941490908")
+                            .password(passwordEncoder.encode("admin"))
+                            .role(Role.ROLE_ADMIN)
+                            .createdAt(LocalDateTime.now())
+                            .build();
 
-        User admin = User.builder()
-                .firstName("admin")
-                .lastName("admin")
-                //.email("admin@admin.com")
-                .phoneNumber("+998941490908")
-                .password(passwordEncoder.encode("admin"))
-                .role(Role.ROLE_ADMIN)
-                .createdAt(LocalDateTime.now())
-                .build();
-
-        this.userRepository.save(admin);
-
+                    this.userRepository.save(admin);
+                });
 
         System.out.println("Admin created");
     }

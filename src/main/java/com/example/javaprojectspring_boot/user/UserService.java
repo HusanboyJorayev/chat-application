@@ -11,11 +11,13 @@ import com.example.javaprojectspring_boot.group.GroupDto;
 import com.example.javaprojectspring_boot.group.GroupMapper;
 import com.example.javaprojectspring_boot.group.GroupRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.example.javaprojectspring_boot.user.Role.ROLE_ADMIN;
 
@@ -35,7 +37,9 @@ public class UserService {
     public ResponseEntity<UserDto> get(Integer id) {
         Optional<User> optional = this.userRepository.findByIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
-            return ResponseEntity.badRequest().body(UserDto.builder().build());
+            return ResponseEntity.badRequest().body(UserDto.builder()
+                            .messages(List.of())
+                    .build());
         }
         User user = optional.get();
         UserDto dto = this.userMapper.toDto(user);
@@ -101,23 +105,15 @@ public class UserService {
         return ResponseEntity.ok().body("User updated");
     }
 
-    public ResponseEntity<String> delete(Integer userId,Integer adminId) {
-        Optional<User> optionalUser = this.userRepository.findByIdAndDeletedAtIsNull(userId);
-        Optional<User> optionalAdmin = this.userRepository.findByIdAndDeletedAtIsNull(adminId);
-        if (optionalUser.isEmpty()) {
-            return ResponseEntity.ok().body("User is not found");
+    public ResponseEntity<String> delete(String phone) {
+        Optional<User> userList = this.userRepository.findByPhoneNumberAndDeletedAtIsNull(phone);
+        if (userList.isEmpty()) {
+            return ResponseEntity.badRequest().body("User is not found");
         }
-        if (optionalAdmin.isEmpty()) {
-            return ResponseEntity.ok().body("User is not found");
-        }
-        var user = optionalUser.get();
-        var admin=optionalAdmin.get();
+        var user = userList.get();
         user.setDeletedAt(LocalDateTime.now());
-        if (admin.getRole().equals(ROLE_ADMIN)) {
-            this.userRepository.delete(user);
-            return ResponseEntity.ok().body("User delete successfully");
-        }
-        else return ResponseEntity.ok().body("You cannot delete this  user");
+        this.userRepository.delete(user);
+        return ResponseEntity.ok().body("User delete successfully");
     }
 
     public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -127,30 +123,6 @@ public class UserService {
             return ResponseEntity.badRequest().body(List.of(UserDto.builder().build()));
         }
         return ResponseEntity.ok().body(list.stream().map(this.userMapper::toDto).toList());
-    }
-
-    public ResponseEntity<List<UserDto>> getUsersWithChatting(Integer id) {
-        List<Chat> optional = this.chatRepository.getChatsWithId(id);
-        if (optional.isEmpty()) {
-            return ResponseEntity.badRequest().body(List.of(UserDto.builder().build()));
-        }
-        List<String> getPhone = new ArrayList<>();
-        for (Chat chat : optional) {
-            getPhone.add(chat.getGetPhone());
-        }
-        List<User> userList = this.userRepository.getAllUsers();
-        if (userList.isEmpty()) {
-            return ResponseEntity.badRequest().body(List.of(UserDto.builder().build()));
-        }
-        Set<User> users = new HashSet<>();
-        for (String string : getPhone) {
-            for (User user : userList) {
-                if (user.getPhoneNumber().equals(string)) {
-                    users.add(user);
-                }
-            }
-        }
-        return ResponseEntity.badRequest().body(users.stream().map(this.userMapper::toDto).toList());
     }
 
     public ResponseEntity<List<GroupDto>> getAddGroupsByUserId(Integer id) {
@@ -170,5 +142,34 @@ public class UserService {
             }
         }
         return ResponseEntity.ok().body(groups.stream().map(this.groupMapper::toDto).toList());
+    }
+
+    public ResponseEntity<Set<UserDto>> getAllUsersByChattingOneUser(String phone) {
+        List<User> userList = this.userRepository.getAllUsers();
+        List<Chat> chatList = this.chatRepository.getAllUsersByChattingByOneUser(phone);
+        if (chatList.isEmpty()) {
+            return ResponseEntity.badRequest().body(Set.of());
+        }
+        if (userList.isEmpty()) {
+            return ResponseEntity.badRequest().body(Set.of());
+        }
+        Set<User> chattingUsers = new HashSet<>();
+        for (User user : userList) {
+            for (Chat chat : chatList) {
+                if (user.getPhoneNumber().equals(chat.getGetPhone()) ||
+                        user.getPhoneNumber().equals(chat.getSendPhone())
+                ) {
+                    chattingUsers.add(user);
+                }
+            }
+        }
+        User user = new User();
+        for (User u : chattingUsers) {
+            if (u.getPhoneNumber().equals(phone))
+                user = u;
+            System.out.println(user);
+        }
+        chattingUsers.remove(user);
+        return ResponseEntity.ok().body(chattingUsers.stream().map(this.userMapper::toDto).collect(Collectors.toSet()));
     }
 }

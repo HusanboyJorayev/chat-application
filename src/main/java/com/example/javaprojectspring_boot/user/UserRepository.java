@@ -43,4 +43,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             """)
     User addUser(@Param(value = "userId") Integer userId, @Param(value = "contactId") Integer contactId);
 
+    Optional<User>findByPhoneNumberAndDeletedAtIsNull(String phone);
+
 }

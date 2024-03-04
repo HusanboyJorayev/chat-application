@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -158,17 +159,26 @@ public class ChatService implements SimpleCrud<Integer, ChatDto> {
 
     public ResponseDto<List<ChatDto>> getAllGetPhoneAndSendPhone(String getPhone, String sendPhone) {
         try {
-            List<Chat> allChats = this.chatRepository.getAllGetPhoneAndSendPhone(getPhone, sendPhone);
-            if (allChats.isEmpty()) {
+            List<Chat>chats=this.chatRepository.getAllChats();
+            if (chats.isEmpty()) {
                 return ResponseDto.<List<ChatDto>>builder()
                         .code(-1)
                         .message("chats are not found")
                         .build();
             }
+            List<Chat>chattingUsersMessage=new ArrayList<>();
+            for (Chat chat : chats) {
+                if ((chat.getGetPhone().equals(getPhone)&&chat.getSendPhone().equals(sendPhone))
+                   || (chat.getSendPhone().equals(getPhone)&&chat.getGetPhone().equals(sendPhone))
+                ){
+                    chattingUsersMessage.add(chat);
+                }
+            }
+
             return ResponseDto.<List<ChatDto>>builder()
                     .success(true)
                     .message("Ok")
-                    .data(allChats.stream().map(this.chatMapper::toDto).toList())
+                    .data(chattingUsersMessage.stream().map(this.chatMapper::toDto).toList())
                     .build();
         } catch (Exception e) {
             return ResponseDto.<List<ChatDto>>builder()

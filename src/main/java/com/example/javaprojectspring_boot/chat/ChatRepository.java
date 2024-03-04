@@ -14,10 +14,9 @@ public interface ChatRepository extends JpaRepository<Chat, Integer> {
 
     @Query(
             nativeQuery = true,
-            value = "select * from chat as c where ((c.send_phone='+998941490908' and c.get_phone='+998') or (c.send_phone='+998' or c.get_phone='+998941490908'))\n" +
-                    "                          and c.get_phone!=c.send_phone and c.deleted_at isnull"
+            value = "select * from chat as c where c.get_phone=:p or c.send_phone=:p"
     )
-    List<Chat> getAllGetPhoneAndSendPhone(@Param(value = "g") String getPhone, @Param(value = "s") String sendPhone);
+    List<Chat> getAllUsersByChattingByOneUser(@Param(value = "p") String phone);
 
     Optional<Chat> findByIdAndDeletedAtIsNull(Integer id);
 
@@ -26,10 +25,5 @@ public interface ChatRepository extends JpaRepository<Chat, Integer> {
             """)
     List<Chat> getAllChats();
 
-
-    @Query("""
-                  select  c from Chat as c where c.userId=:id
-            """)
-    List<Chat> getChatsWithId(Integer id);
 
 }

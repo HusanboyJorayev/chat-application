@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,11 +36,6 @@ public class UserController {
         return this.userService.getChat(id);
     }
 
-    @GetMapping("/getUserWithChats")
-    public ResponseEntity<List<UserDto>> getUsersWithChatting(@RequestParam(value = "id") Integer id) {
-        return this.userService.getUsersWithChatting(id);
-    }
-
     @GetMapping("/getContactAndGroupAndChats")
     public ResponseEntity<UserDto> getContactAndGroupAndChats(@RequestParam(value = "id") Integer id) {
         return this.userService.getContactAndGroupAndChats(id);
@@ -50,9 +46,9 @@ public class UserController {
         return this.userService.update(id, dto);
     }
 
-    @GetMapping("/delete")
-    public ResponseEntity<String> delete(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "adminId") Integer adminId) {
-        return this.userService.delete(userId, adminId);
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam(value = "phone") String phone) {
+        return this.userService.delete(phone);
     }
 
     @GetMapping("/getAllUsers")
@@ -63,5 +59,10 @@ public class UserController {
     @GetMapping("/getAddGroupsByContactId")
     public ResponseEntity<List<GroupDto>> getAddGroupsByContactId(@RequestParam(value = "id") Integer id) {
         return this.userService.getAddGroupsByUserId(id);
+    }
+
+    @GetMapping("/getAllUsersByChattingOneUser")
+    public ResponseEntity<Set<UserDto>> getAllUsersByChattingOneUser(@RequestParam(value = "p") String phone) {
+        return this.userService.getAllUsersByChattingOneUser(phone);
     }
 }
